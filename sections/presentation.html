@@ -1,364 +1,618 @@
+
 <!DOCTYPE html>
 <html lang="ky">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bilimal.org — Reels Презентация</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', 'Poppins', sans-serif;
-    }
-
-    body {
-      background-color: #02040a;
-      color: #f8fafc;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    /* Reels / TikTok вертикалдуу телефон экраны форматы */
-    .reels-container {
-      width: 100%;
-      max-width: 410px;
-      height: 85vh;
-      max-height: 800px;
-      background: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      border-radius: 36px;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(124, 58, 237, 0.2);
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 35px 25px;
-      overflow: hidden;
-    }
-
-    /* Фоновое сияние */
-    .ambient-light {
-      position: absolute;
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, rgba(124, 58, 237, 0.3) 0%, rgba(0,0,0,0) 70%);
-      top: 20%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    /* Слайддар */
-    .slide {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      height: 100%;
-      position: relative;
-      z-index: 1;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .slide.active {
-      display: flex;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .slide-icon {
-      font-size: 3rem;
-      color: #38bdf8;
-      background: rgba(56, 189, 248, 0.12);
-      width: 85px;
-      height: 85px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 26px;
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      box-shadow: 0 0 30px rgba(56, 189, 248, 0.25);
-      margin-bottom: 24px;
-    }
-
-    .slide h1 {
-      font-size: 1.9rem;
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 14px;
-      line-height: 1.25;
-    }
-
-    .slide h1 span {
-      background: linear-gradient(135deg, #38bdf8, #c084fc);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .slide p {
-      font-size: 0.98rem;
-      color: #94a3b8;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-
-    .features-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      width: 100%;
-      margin-top: 10px;
-      text-align: left;
-    }
-
-    .feature-item {
-      background: rgba(30, 41, 59, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 14px 16px;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .feature-item i {
-      color: #c084fc;
-      font-size: 1.2rem;
-    }
-
-    .feature-item div h4 {
-      font-size: 0.9rem;
-      color: #fff;
-    }
-
-    .feature-item div p {
-      font-size: 0.75rem;
-      color: #94a3b8;
-      margin-bottom: 0;
-    }
-
-    /* Индикатортордор (Progress bars жогору жакта) */
-    .progress-bars {
-      position: absolute;
-      top: 15px;
-      left: 25px;
-      right: 25px;
-      display: flex;
-      gap: 6px;
-      z-index: 10;
-    }
-
-    .bar {
-      flex: 1;
-      height: 3px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-
-    .bar-fill {
-      width: 0%;
-      height: 100%;
-      background: #38bdf8;
-      transition: width 0.1s linear;
-    }
-
-    .bar.active .bar-fill {
-      width: 100%;
-      transition: width 5s linear; /* 5 секунд сайын слайд алмашат */
-    }
-
-    .bar.completed .bar-fill {
-      width: 100%;
-    }
-
-    /* Төмөнкү баскычтар жана CTA */
-    .footer-controls {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      position: relative;
-      z-index: 10;
-      padding-top: 15px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .cta-btn {
-      background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
-      color: #02040a;
-      padding: 14px;
-      border-radius: 14px;
-      font-weight: 700;
-      text-align: center;
-      text-decoration: none;
-      box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4);
-      transition: transform 0.2s ease;
-      display: block;
-    }
-
-    .cta-btn:active {
-      transform: scale(0.97);
-    }
-
-    .nav-hints {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.75rem;
-      color: rgba(255, 255, 255, 0.4);
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071124">
+<title>Bilimal.org — Санарип билим берүү</title>
+<style>
+:root {
+  --bg: #071124;
+  --blue: #46c8ff;
+  --purple: #a58bff;
+  --white: #f7f9ff;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 18px;
+  color: var(--white);
+  background:
+    radial-gradient(ellipse at 50% 10%, #192c57 0%, #090f20 55%, #030712 100%);
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+.toolbar {
+  width: min(100%, 410px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.brand { font-weight: 900; letter-spacing: -.5px; }
+.brand span { color: var(--blue); }
+button {
+  font: inherit;
+  cursor: pointer;
+  color: white;
+  background: #172441;
+  border: 1px solid #405478;
+  border-radius: 12px;
+  padding: 10px 13px;
+}
+button:hover { background: #26395e; }
+.stage {
+  width: min(100%, 410px, calc((100vh - 125px) * 9 / 16));
+  aspect-ratio: 9 / 16;
+  position: relative;
+  overflow: hidden;
+  border-radius: 25px;
+  isolation: isolate;
+  background: var(--bg);
+  border: 1px solid #34496c;
+  box-shadow: 0 25px 90px #000a;
+}
+.aurora {
+  position: absolute;
+  inset: -25%;
+  z-index: -2;
+  background:
+    radial-gradient(ellipse at 15% 25%, #164e9b99, transparent 45%),
+    radial-gradient(ellipse at 85% 55%, #6938ad77, transparent 45%),
+    radial-gradient(ellipse at 45% 90%, #007bba55, transparent 40%);
+  animation: drift 9s ease-in-out infinite alternate;
+}
+@keyframes drift {
+  to { transform: translate(4%, -3%) scale(1.12); }
+}
+.stars {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: .5;
+  background-image:
+    radial-gradient(circle, #fff 1px, transparent 1.5px),
+    radial-gradient(circle, #70dfff 1px, transparent 1.5px);
+  background-size: 47px 53px, 73px 89px;
+  background-position: 10px 20px, 25px 42px;
+}
+.progress {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: #ffffff22;
+  z-index: 20;
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--blue), var(--purple));
+}
+.counter {
+  position: absolute;
+  top: 17px; right: 18px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #c6d5f4;
+  z-index: 5;
+}
+.scene {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 36px 25px 42px;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(.98);
+  transition: opacity .65s ease, transform .65s ease, visibility .65s;
+}
+.scene.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+.eyebrow {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: var(--blue);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+h1, h2, p { margin-top: 0; }
+h1 {
+  font-size: clamp(34px, 9vw, 49px);
+  line-height: 1.02;
+  letter-spacing: -2px;
+  margin-bottom: 18px;
+}
+h2 {
+  font-size: clamp(27px, 7vw, 37px);
+  line-height: 1.08;
+  letter-spacing: -1px;
+  margin-bottom: 15px;
+}
+p {
+  color: #c5d1e9;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.gradient {
+  background: linear-gradient(100deg, #63ddff, #b7a1ff 70%, #f2aaff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.pill {
+  display: inline-block;
+  border: 1px solid #76cfff66;
+  background: #1c5a8830;
+  color: #bdeaff;
+  padding: 8px 13px;
+  border-radius: 30px;
+  font-size: 11px;
+  margin-bottom: 20px;
+}
+.symbol {
+  width: 94px;
+  height: 94px;
+  display: grid;
+  place-items: center;
+  font-size: 49px;
+  border-radius: 27px;
+  border: 1px solid #80cfff66;
+  background: linear-gradient(145deg, #277dbb44, #8c66ed30);
+  box-shadow: 0 0 48px #358cfc22, inset 0 0 25px #7dcfff12;
+  margin-bottom: 27px;
+}
+.big-number {
+  font-size: 68px;
+  font-weight: 900;
+  letter-spacing: -5px;
+  line-height: 1;
+  margin-bottom: 18px;
+  color: var(--blue);
+}
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+  margin-top: 17px;
+}
+.mini-card {
+  text-align: left;
+  padding: 15px 12px;
+  min-height: 108px;
+  border: 1px solid #9acbff30;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #ffffff10, #ffffff04);
+}
+.mini-card .emoji { font-size: 24px; margin-bottom: 9px; }
+.mini-card strong { display: block; font-size: 12px; margin-bottom: 5px; }
+.mini-card small { color: #b8c7e1; font-size: 10px; line-height: 1.4; }
+.dashboard {
+  width: 100%;
+  padding: 17px;
+  border-radius: 20px;
+  border: 1px solid #76baff55;
+  background: #0c1932e8;
+  text-align: left;
+  box-shadow: 0 15px 40px #0003;
+  margin: 10px 0 20px;
+}
+.dash-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  margin-bottom: 17px;
+}
+.dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  background: #53e5bd;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.dash-row {
+  padding: 11px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid #ffffff12;
+  font-size: 12px;
+}
+.dash-icon {
+  width: 34px; height: 34px;
+  display: grid; place-items: center;
+  border-radius: 10px;
+  background: #263b63;
+  font-size: 17px;
+}
+.dash-row small {
+  display: block;
+  margin-top: 4px;
+  font-size: 10px;
+  color: #aabbd8;
+}
+.cta {
+  display: inline-block;
+  text-decoration: none;
+  color: #041426;
+  font-size: 15px;
+  font-weight: 900;
+  background: linear-gradient(100deg, #63dcff, #a7b1ff);
+  padding: 15px 21px;
+  border-radius: 14px;
+  box-shadow: 0 8px 30px #48bdff30;
+  transition: transform .2s;
+}
+.cta:hover { transform: scale(1.04); }
+.url {
+  margin-top: 17px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #b5dfff;
+}
+.scene.active .reveal {
+  animation: reveal .8s both;
+}
+.scene.active .delay1 { animation-delay: .15s; }
+.scene.active .delay2 { animation-delay: .35s; }
+.scene.active .delay3 { animation-delay: .55s; }
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.footer {
+  position: absolute;
+  bottom: 17px;
+  left: 0; right: 0;
+  color: #8da4ca;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-align: center;
+}
+.controls {
+  width: min(100%, 410px);
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.controls button { flex: 1; max-width: 140px; }
+.hint {
+  color: #9aacc8;
+  font-size: 11px;
+  text-align: center;
+  line-height: 1.5;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
 </head>
 <body>
 
-  <div class="reels-container" id="reelsCard">
-    
-    <!-- Жогорку прогресс сызыктары (Reels индикатору) -->
-    <div class="progress-bars" id="progressBars">
-      <div class="bar"><div class="bar-fill"></div></div>
-      <div class="bar"><div class="bar-fill"></div></div>
-      <div class="bar"><div class="bar-fill"></div></div>
-      <div class="bar"><div class="bar-fill"></div></div>
-      <div class="bar"><div class="bar-fill"></div></div>
-    </div>
+<header class="toolbar">
+  <div class="brand">BILI<span>MAL</span>.ORG</div>
+  <button id="soundBtn" type="button" aria-pressed="false"
+          title="Үн режимин алмаштыруу">♫ Үн</button>
+</header>
 
-    <div class="ambient-light"></div>
+<main class="stage" id="stage" aria-label="Bilimal жарнамалык презентациясы">
+  <div class="aurora"></div>
+  <div class="stars"></div>
+  <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="counter" id="counter">01 / 06</div>
 
-    <!-- СЛАЙД 1 -->
-    <div class="slide active" id="slide-1">
-      <div class="slide-icon"><i class="fa-solid fa-rocket"></i></div>
-      <h1>Физика эми <span>тасмадай кызыктуу!</span></h1>
-      <p>Татаал формулалар артта калды. Bilimal.org менен илим дүйнөсүнө интерактивдүү кадам таштаңыз.</p>
-    </div>
+  <!-- 1. КӨЙГӨЙ -->
+  <section class="scene active">
+    <div class="eyebrow reveal">Билим берүүнүн жаңы доору</div>
+    <div class="symbol reveal delay1">✦</div>
+    <h1 class="reveal delay1">
+      Мугалимдин<br>убактысы —<br>
+      <span class="gradient">баалуу!</span>
+    </h1>
+    <p class="reveal delay2">
+      Сабак даярдоо, материал издөө, тест түзүү…
+      Мунун баарын санарип мүмкүнчүлүктөр менен жеңилдетүүгө болот.
+    </p>
+    <div class="pill reveal delay3">БИЛИМ • ТЕХНОЛОГИЯ • ӨНҮГҮҮ</div>
+    <div class="footer">КЕЛЕЧЕК БҮГҮН БАШТАЛАТ</div>
+  </section>
 
-    <!-- СЛАЙД 2 -->
-    <div class="slide" id="slide-2">
-      <div class="slide-icon"><i class="fa-solid fa-cube"></i></div>
-      <h1>Инновациялык <span>Мүмкүнчүлүктөр</span></h1>
-      <div class="features-list">
-        <div class="feature-item">
-          <i class="fa-solid fa-globe"></i>
-          <div>
-            <h4>3D Симуляциялар</h4>
-            <p>Жылдыздар эволюциясы.</p>
-          </div>
-        </div>
-        <div class="feature-item">
-          <i class="fa-solid fa-gamepad"></i>
-          <div>
-            <h4>Интерактивдүү Игры</h4>
-            <p>«Кыз Куумай: Физика».</p>
-          </div>
-        </div>
+  <!-- 2. БРЕНД -->
+  <section class="scene">
+    <div class="eyebrow reveal">Сизге сунуштайбыз</div>
+    <h1 class="reveal delay1">
+      <span class="gradient">Bilimal</span><br>.org
+    </h1>
+    <div class="dashboard reveal delay2">
+      <div class="dash-top">
+        <strong>Bilimal.org</strong>
+        <span><i class="dot"></i>Санарип билим</span>
+      </div>
+      <div class="dash-row">
+        <div class="dash-icon">📚</div>
+        <div><strong>Окуу материалдары</strong>
+          <small>Издеңиз, үйрөнүңүз, колдонуңуз</small></div>
+      </div>
+      <div class="dash-row">
+        <div class="dash-icon">🧪</div>
+        <div><strong>Тесттер жана тапшырмалар</strong>
+          <small>Билимди бекемдөө үчүн</small></div>
+      </div>
+      <div class="dash-row">
+        <div class="dash-icon">🤖</div>
+        <div><strong>AI жардамчысы</strong>
+          <small>«Туйгун» — санарип жардамчы</small></div>
       </div>
     </div>
+    <p class="reveal delay3">Билим берүү үчүн бир санарип мейкиндик.</p>
+    <div class="footer">BILIMAL.ORG</div>
+  </section>
 
-    <!-- СЛАЙД 3 -->
-    <div class="slide" id="slide-3">
-      <div class="slide-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
-      <h1>Мугалимдер үчүн <span>ишенимдүү жардамчы</span></h1>
-      <p>Тарбиялык сааттар, 7-11-класстар үчүн тесттер, сабак пландары жана өз материалдарыңызды жайгаштырып киреше табуу.</p>
-    </div>
-
-    <!-- СЛАЙД 4 -->
-    <div class="slide" id="slide-4">
-      <div class="slide-icon"><i class="fa-solid fa-shield-halved"></i></div>
-      <h1>Коопсуз жана <span>Ыкчам Тутум</span></h1>
-      <p>Vercel API, Firebase жана MBANK + Freedom Pay аркылуу толук автоматташтырылган төлөмдөр.</p>
-    </div>
-
-    <!-- СЛАЙД 5 -->
-    <div class="slide" id="slide-5">
-      <div class="slide-icon"><i class="fa-solid fa-star"></i></div>
-      <h1>Билим берүүнүн <span>жаңы доору!</span></h1>
-      <p>Сайтка кириңиз жана өзүңүзгө керектүү бардык санариптик ресурстарды табыңыз.</p>
-      <a href="https://bilimal.org" target="_blank" class="cta-btn">bilimal.org сайтына өтүү <i class="fa-solid fa-arrow-right"></i></a>
-    </div>
-
-    <!-- Төмөнкү башкаруу -->
-    <div class="footer-controls">
-      <div class="nav-hints">
-        <span>⬅️ Мурунку</span>
-        <span>🖱️ Скролл же свайп</span>
-        <span>Кийинки ➡️</span>
+  <!-- 3. МУГАЛИМДЕР -->
+  <section class="scene">
+    <div class="eyebrow reveal">Мугалимдер үчүн</div>
+    <h2 class="reveal delay1">Сабакка даярдык<br><span class="gradient">жаңы деңгээлде</span></h2>
+    <p class="reveal delay1">Күнүмдүк ишиңизге керектүү материалдарды бир жерден издеңиз.</p>
+    <div class="cards reveal delay2">
+      <div class="mini-card">
+        <div class="emoji">📝</div>
+        <strong>Сабак пландары</strong>
+        <small>Сабакты уюштурууга жардам</small>
+      </div>
+      <div class="mini-card">
+        <div class="emoji">📊</div>
+        <strong>Презентациялар</strong>
+        <small>Түшүндүрүүнү кызыктуу кылыңыз</small>
+      </div>
+      <div class="mini-card">
+        <div class="emoji">✅</div>
+        <strong>Тесттер</strong>
+        <small>Билимди текшерүү</small>
+      </div>
+      <div class="mini-card">
+        <div class="emoji">🔬</div>
+        <strong>Практикалык иштер</strong>
+        <small>Тажрыйба жана тапшырмалар</small>
       </div>
     </div>
+    <div class="footer">МУГАЛИМ ҮЧҮН САНАРИП ЖАРДАМ</div>
+  </section>
 
-  </div>
+  <!-- 4. ОКУУЧУЛАР -->
+  <section class="scene">
+    <div class="eyebrow reveal">Окуучулар үчүн</div>
+    <div class="symbol reveal delay1">🚀</div>
+    <h2 class="reveal delay1">
+      Үйрөнүү —<br><span class="gradient">кызыктуу!</span>
+    </h2>
+    <p class="reveal delay2">
+      Тесттер, тапшырмалар жана окууга кошумча материалдар
+      аркылуу билимиңизди бекемдеңиз.
+    </p>
+    <div class="pill reveal delay2">ИЗИЛДЕ • ОЙЛОН • ЧЕЧ</div>
+    <p class="reveal delay3">Билимге умтулуу — келечекке кадам.</p>
+    <div class="footer">АР БИР КҮН — ЖАҢЫ МҮМКҮНЧҮЛҮК</div>
+  </section>
 
-  <script>
-    let slideIndex = 0;
-    const slides = document.querySelectorAll(".slide");
-    const bars = document.querySelectorAll(".bar");
-    const totalSlides = slides.length;
-    let slideInterval;
-    const slideDuration = 5000; // 5 секунд
+  <!-- 5. ТУЙГУН AI -->
+  <section class="scene">
+    <div class="eyebrow reveal">Жасалма интеллект</div>
+    <div class="symbol reveal delay1">🤖</div>
+    <h2 class="reveal delay1">
+      Таанышыңыз:<br><span class="gradient">Туйгун AI</span>
+    </h2>
+    <p class="reveal delay2">
+      Санарип жардамчы менен билим дүйнөсүнө жаңыча көз караш.
+      Суроо бериңиз, идея алыңыз, окууга керектүү маалыматтарды изилдеңиз.
+    </p>
+    <div class="pill reveal delay2">ТЕХНОЛОГИЯ БИЛИМ ҮЧҮН</div>
+    <p class="reveal delay3">
+      Жасалма интеллект — мугалимдин ордун басуу эмес,
+      анын мүмкүнчүлүктөрүн кеңейтүү үчүн курал.
+    </p>
+    <div class="footer">BILIMAL.ORG • ТУЙГУН</div>
+  </section>
 
-    function showSlide(n) {
-      slides.forEach(s => s.classList.remove("active"));
-      bars.forEach((b, idx) => {
-        b.classList.remove("active", "completed");
-        if (idx < n) b.classList.add("completed");
-      });
+  <!-- 6. ЧАКЫРЫК -->
+  <section class="scene">
+    <div class="eyebrow reveal">Сиз да кошулуңуз</div>
+    <h1 class="reveal delay1">
+      Билимдин<br>жаңы <span class="gradient">доору!</span>
+    </h1>
+    <p class="reveal delay2">
+      Мүмкүнчүлүктөрдү изилдеңиз.
+      Окууну жана окутууну жаңы деңгээлге көтөрүүгө кадам таштаңыз.
+    </p>
+    <div class="symbol reveal delay2">✦</div>
+    <a class="cta reveal delay3"
+       href="https://bilimal.org"
+       target="_blank" rel="noopener noreferrer">
+       Bilimal.org сайтына өтүү ↗
+    </a>
+    <div class="url reveal delay3">WWW.BILIMAL.ORG</div>
+    <div class="footer">BILIMAL.ORG — БИЛИМ КЕЛЕЧЕГИ</div>
+  </section>
+</main>
 
-      slideIndex = (n + totalSlides) % totalSlides;
-      slides[slideIndex].classList.add("active");
-      bars[slideIndex].classList.add("active");
+<div class="controls">
+  <button id="prevBtn" type="button">← Артка</button>
+  <button id="playBtn" type="button">Ⅱ Пауза</button>
+  <button id="nextBtn" type="button">Кийинки →</button>
+</div>
+<div class="hint" id="hint">30 секунддук жарнама · 9:16 вертикалдуу формат</div>
 
-      resetTimer();
-    }
+<script>
+(() => {
+  "use strict";
 
-    function nextSlide() {
-      showSlide(slideIndex + 1);
-    }
+  const scenes = [...document.querySelectorAll(".scene")];
+  const progressFill = document.getElementById("progressFill");
+  const counter = document.getElementById("counter");
+  const playBtn = document.getElementById("playBtn");
+  const soundBtn = document.getElementById("soundBtn");
+  const hint = document.getElementById("hint");
 
-    function prevSlide() {
-      showSlide(slideIndex - 1);
-    }
+  const SCENE_DURATION = 5000;
+  const TOTAL_DURATION = scenes.length * SCENE_DURATION;
 
-    function resetTimer() {
-      clearInterval(slideInterval);
-      slideInterval = setInterval(nextSlide, slideDuration);
-    }
+  let current = 0;
+  let startedAt = performance.now();
+  let elapsedBeforePause = 0;
+  let paused = false;
+  let soundOn = false;
+  let audioContext = null;
+  let animationFrame = 0;
+  let lastToneScene = -1;
 
-    // Баштоо
-    showSlide(0);
-
-    // Мышканын дөңгөлөгү (Scroll) менен башкаруу
-    const card = document.getElementById('reelsCard');
-    card.addEventListener('wheel', (e) => {
-      if (e.deltaY > 0) {
-        nextSlide();
-      } else {
-        prevSlide();
-      }
+  function showScene(index) {
+    current = (index + scenes.length) % scenes.length;
+    scenes.forEach((scene, i) => {
+      scene.classList.toggle("active", i === current);
+      scene.setAttribute("aria-hidden", i === current ? "false" : "true");
     });
+    counter.textContent =
+      String(current + 1).padStart(2, "0") + " / " +
+      String(scenes.length).padStart(2, "0");
+    lastToneScene = -1;
+    if (soundOn && !paused) playTone(current);
+  }
 
-    // Мобилдик түзмөктөр үчүн Touch (Swipe) колдоосу
-    let touchStartY = 0;
-    card.addEventListener('touchstart', e => {
-      touchStartY = e.touches[0].clientY;
-    });
+  function elapsedNow() {
+    return elapsedBeforePause +
+      (paused ? 0 : performance.now() - startedAt);
+  }
 
-    card.addEventListener('touchend', e => {
-      let touchEndY = e.changedTouches[0].clientY;
-      if (touchStartY - touchEndY > 50) {
-        nextSlide(); // Өйдө свайп
-      } else if (touchEndY - touchStartY > 50) {
-        prevSlide(); // Ылдый свайп
-      }
-    });
-  </script>
+  function render(now) {
+    if (!paused) {
+      const elapsed = elapsedNow();
+      const totalProgress = (elapsed % TOTAL_DURATION) / TOTAL_DURATION;
+      progressFill.style.width = (totalProgress * 100) + "%";
+
+      const nextScene = Math.floor(elapsed / SCENE_DURATION) % scenes.length;
+      if (nextScene !== current) showScene(nextScene);
+
+      if (soundOn && lastToneScene !== current) playTone(current);
+    }
+    animationFrame = requestAnimationFrame(render);
+  }
+
+  function pause() {
+    if (paused) {
+      paused = false;
+      startedAt = performance.now();
+      playBtn.textContent = "Ⅱ Пауза";
+      hint.textContent = "Презентация уланууда";
+      if (soundOn) playTone(current);
+    } else {
+      elapsedBeforePause = elapsedNow();
+      paused = true;
+      playBtn.textContent = "▶ Улантуу";
+      hint.textContent = "Презентация токтотулду";
+    }
+  }
+
+  function goTo(index) {
+    elapsedBeforePause =
+      ((index + scenes.length) % scenes.length) * SCENE_DURATION;
+    startedAt = performance.now();
+    showScene(index);
+    progressFill.style.width =
+      (elapsedBeforePause / TOTAL_DURATION * 100) + "%";
+    if (paused) {
+      paused = false;
+      playBtn.textContent = "Ⅱ Пауза";
+    }
+    hint.textContent = "Презентация уланууда";
+  }
+
+  function playTone(index) {
+    lastToneScene = index;
+    if (!soundOn) return;
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      if (!audioContext) audioContext = new AudioCtx();
+      if (audioContext.state === "suspended") audioContext.resume();
+
+      const osc = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      const now = audioContext.currentTime;
+      const notes = [392, 494, 587, 440, 659, 784];
+
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(notes[index], now);
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(0.045, now + 0.04);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.65);
+
+      osc.connect(gain);
+      gain.connect(audioContext.destination);
+      osc.start(now);
+      osc.stop(now + 0.7);
+    } catch (error) {
+      console.warn("Үн ойнотулган жок:", error);
+    }
+  }
+
+  playBtn.addEventListener("click", pause);
+  document.getElementById("prevBtn").addEventListener("click", () => goTo(current - 1));
+  document.getElementById("nextBtn").addEventListener("click", () => goTo(current + 1));
+
+  soundBtn.addEventListener("click", async () => {
+    soundOn = !soundOn;
+    soundBtn.textContent = soundOn ? "♫ Үн: күйүк" : "♫ Үн";
+    soundBtn.setAttribute("aria-pressed", String(soundOn));
+    if (soundOn) {
+      playTone(current);
+      hint.textContent = "Жөнөкөй үн эффекттери күйгүзүлдү";
+    } else {
+      hint.textContent = "Үн эффекттери өчүрүлдү";
+    }
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "ArrowRight") goTo(current + 1);
+    if (event.key === "ArrowLeft") goTo(current - 1);
+    if (event.code === "Space" &&
+        !["BUTTON", "A"].includes(document.activeElement.tagName)) {
+      event.preventDefault();
+      pause();
+    }
+  });
+
+  let touchStartX = 0;
+  const stage = document.getElementById("stage");
+  stage.addEventListener("touchstart", event => {
+    touchStartX = event.changedTouches[0].clientX;
+  }, { passive: true });
+
+  stage.addEventListener("touchend", event => {
+    const delta = event.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(delta) > 65) goTo(current + (delta < 0 ? 1 : -1));
+  }, { passive: true });
+
+  showScene(0);
+  animationFrame = requestAnimationFrame(render);
+})();
+</script>
 </body>
 </html>
