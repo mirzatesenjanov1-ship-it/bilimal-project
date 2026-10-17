@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bilimal.org — Келеөктүн Билим Берүү Платформасы</title>
+  <title>Bilimal.org — Reels Презентация</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   
@@ -16,67 +16,48 @@
     }
 
     body {
-      background-color: #030712;
+      background-color: #02040a;
       color: #f8fafc;
       height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      position: relative;
     }
 
-    /* Фондук кооз неон нурлар */
-    .bg-glow-1 {
-      position: absolute;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(3, 7, 18, 0) 70%);
-      top: -100px;
-      left: -100px;
-      z-index: 0;
-      pointer-events: none;
-      animation: pulseGlow 6s infinite alternate;
-    }
-
-    .bg-glow-2 {
-      position: absolute;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, rgba(3, 7, 18, 0) 70%);
-      bottom: -100px;
-      right: -100px;
-      z-index: 0;
-      pointer-events: none;
-      animation: pulseGlow 6s infinite alternate-reverse;
-    }
-
-    @keyframes pulseGlow {
-      0% { transform: scale(1); opacity: 0.8; }
-      100% { transform: scale(1.2); opacity: 1; }
-    }
-
-    .presentation-container {
-      width: 90%;
-      max-width: 1100px;
-      height: 620px;
-      background: rgba(15, 23, 42, 0.75);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
+    /* Reels / TikTok вертикалдуу телефон экраны форматы */
+    .reels-container {
+      width: 100%;
+      max-width: 410px;
+      height: 85vh;
+      max-height: 800px;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(20px);
       border: 1px solid rgba(56, 189, 248, 0.3);
-      border-radius: 28px;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      border-radius: 36px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(124, 58, 237, 0.2);
       position: relative;
-      z-index: 1;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 50px;
+      padding: 35px 25px;
       overflow: hidden;
     }
 
-    /* Слайддардын стили */
+    /* Фоновое сияние */
+    .ambient-light {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.3) 0%, rgba(0,0,0,0) 70%);
+      top: 20%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Слайддар */
     .slide {
       display: none;
       flex-direction: column;
@@ -84,24 +65,40 @@
       justify-content: center;
       text-align: center;
       height: 100%;
+      position: relative;
+      z-index: 1;
       opacity: 0;
-      transform: translateY(30px) scale(0.98);
-      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(20px);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .slide.active {
       display: flex;
       opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: translateY(0);
+    }
+
+    .slide-icon {
+      font-size: 3rem;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      width: 85px;
+      height: 85px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 26px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.25);
+      margin-bottom: 24px;
     }
 
     .slide h1 {
-      font-size: 2.8rem;
+      font-size: 1.9rem;
       font-weight: 800;
-      color: #f8fafc;
-      margin-bottom: 16px;
+      color: #fff;
+      margin-bottom: 14px;
       line-height: 1.25;
-      letter-spacing: -0.5px;
     }
 
     .slide h1 span {
@@ -111,299 +108,257 @@
     }
 
     .slide p {
-      font-size: 1.15rem;
+      font-size: 0.98rem;
       color: #94a3b8;
-      max-width: 750px;
-      margin-bottom: 30px;
-      line-height: 1.7;
+      line-height: 1.6;
+      margin-bottom: 20px;
     }
 
-    .slide-icon {
-      font-size: 3.5rem;
-      color: #38bdf8;
-      margin-bottom: 24px;
-      background: rgba(56, 189, 248, 0.1);
-      width: 100px;
-      height: 100px;
+    .features-list {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 30px;
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      box-shadow: 0 0 40px rgba(56, 189, 248, 0.2);
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      flex-direction: column;
+      gap: 12px;
       width: 100%;
       margin-top: 10px;
-    }
-
-    .feature-card {
-      background: rgba(30, 41, 59, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 24px;
-      border-radius: 18px;
       text-align: left;
-      transition: transform 0.3s ease, border-color 0.3s ease;
     }
 
-    .feature-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(56, 189, 248, 0.4);
+    .feature-item {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 14px 16px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
     }
 
-    .feature-card i {
+    .feature-item i {
       color: #c084fc;
-      font-size: 1.6rem;
-      margin-bottom: 12px;
+      font-size: 1.2rem;
     }
 
-    .feature-card h3 {
-      font-size: 1.05rem;
+    .feature-item div h4 {
+      font-size: 0.9rem;
       color: #fff;
-      margin-bottom: 6px;
     }
 
-    .feature-card p {
-      font-size: 0.85rem;
+    .feature-item div p {
+      font-size: 0.75rem;
       color: #94a3b8;
       margin-bottom: 0;
-      line-height: 1.5;
     }
 
-    /* Башкаруу панели */
-    .controls {
+    /* Индикатортордор (Progress bars жогору жакта) */
+    .progress-bars {
+      position: absolute;
+      top: 15px;
+      left: 25px;
+      right: 25px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding-top: 24px;
+      gap: 6px;
+      z-index: 10;
     }
 
-    .nav-btn {
-      background: rgba(30, 41, 59, 0.8);
-      color: #38bdf8;
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      padding: 12px 24px;
-      border-radius: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      transition: all 0.3s ease;
-    }
-
-    .nav-btn:hover {
-      background: #38bdf8;
-      color: #030712;
-      box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
-    }
-
-    .dots {
-      display: flex;
-      gap: 10px;
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
+    .bar {
+      flex: 1;
+      height: 3px;
       background: rgba(255, 255, 255, 0.2);
-      cursor: pointer;
-      transition: all 0.4s ease;
+      border-radius: 2px;
+      overflow: hidden;
     }
 
-    .dot.active {
+    .bar-fill {
+      width: 0%;
+      height: 100%;
       background: #38bdf8;
-      width: 35px;
-      border-radius: 6px;
-      box-shadow: 0 0 15px rgba(56, 189, 248, 0.6);
+      transition: width 0.1s linear;
+    }
+
+    .bar.active .bar-fill {
+      width: 100%;
+      transition: width 5s linear; /* 5 секунд сайын слайд алмашат */
+    }
+
+    .bar.completed .bar-fill {
+      width: 100%;
+    }
+
+    /* Төмөнкү баскычтар жана CTA */
+    .footer-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+      z-index: 10;
+      padding-top: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .cta-btn {
       background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
-      color: #030712;
-      padding: 14px 36px;
+      color: #02040a;
+      padding: 14px;
       border-radius: 14px;
       font-weight: 700;
+      text-align: center;
       text-decoration: none;
-      box-shadow: 0 10px 30px rgba(56, 189, 248, 0.4);
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
+      box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4);
+      transition: transform 0.2s ease;
+      display: block;
     }
 
-    .cta-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 40px rgba(192, 132, 252, 0.6);
+    .cta-btn:active {
+      transform: scale(0.97);
     }
 
-    .scroll-hint {
-      position: absolute;
-      bottom: 15px;
-      left: 50%;
-      transform: translateX(-50%);
+    .nav-hints {
+      display: flex;
+      justify-content: space-between;
       font-size: 0.75rem;
       color: rgba(255, 255, 255, 0.4);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      pointer-events: none;
     }
   </style>
 </head>
 <body>
 
-  <div class="bg-glow-1"></div>
-  <div class="bg-glow-2"></div>
-
-  <div class="presentation-container">
+  <div class="reels-container" id="reelsCard">
     
+    <!-- Жогорку прогресс сызыктары (Reels индикатору) -->
+    <div class="progress-bars" id="progressBars">
+      <div class="bar"><div class="bar-fill"></div></div>
+      <div class="bar"><div class="bar-fill"></div></div>
+      <div class="bar"><div class="bar-fill"></div></div>
+      <div class="bar"><div class="bar-fill"></div></div>
+      <div class="bar"><div class="bar-fill"></div></div>
+    </div>
+
+    <div class="ambient-light"></div>
+
     <!-- СЛАЙД 1 -->
     <div class="slide active" id="slide-1">
       <div class="slide-icon"><i class="fa-solid fa-rocket"></i></div>
-      <h1>Физика жана Астрономия эми <span>тасмадай кызыктуу!</span></h1>
-      <p>Татаал формулалар жана зериктирген китептер артта калды. Заманбап технологиялар аркылуу илим дүйнөсүнө интерактивдүү саякат жасаңыз.</p>
+      <h1>Физика эми <span>тасмадай кызыктуу!</span></h1>
+      <p>Татаал формулалар артта калды. Bilimal.org менен илим дүйнөсүнө интерактивдүү кадам таштаңыз.</p>
     </div>
 
     <!-- СЛАЙД 2 -->
     <div class="slide" id="slide-2">
-      <div class="slide-icon"><i class="fa-solid fa-globe"></i></div>
-      <h1>Тосуп алгыла — <span>Bilimal.org</span></h1>
-      <p>Окуучулар, мугалимдер жана илимди сүйүүчүлөр үчүн бирдиктүү инновациялык санариптик платформа.</p>
-      <div class="features-grid">
-        <div class="feature-card">
-          <i class="fa-solid fa-cube"></i>
-          <h3>3D Симуляциялар</h3>
-          <p>Космос жана жылдыздар эволюциясы.</p>
+      <div class="slide-icon"><i class="fa-solid fa-cube"></i></div>
+      <h1>Инновациялык <span>Мүмкүнчүлүктөр</span></h1>
+      <div class="features-list">
+        <div class="feature-item">
+          <i class="fa-solid fa-globe"></i>
+          <div>
+            <h4>3D Симуляциялар</h4>
+            <p>Жылдыздар эволюциясы.</p>
+          </div>
         </div>
-        <div class="feature-card">
+        <div class="feature-item">
           <i class="fa-solid fa-gamepad"></i>
-          <h3>Оюндар & Тесттер</h3>
-          <p>«Кыз Куумай: Физика» жана интерактивдүү тапшырмалар.</p>
-        </div>
-        <div class="feature-card">
-          <i class="fa-solid fa-chalkboard-user"></i>
-          <h3>Мугалимдер Маркети</h3>
-          <p>Даяр сабак пландары жана материалдар алмашуу.</p>
+          <div>
+            <h4>Интерактивдүү Игры</h4>
+            <p>«Кыз Куумай: Физика».</p>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- СЛАЙД 3 -->
     <div class="slide" id="slide-3">
-      <div class="slide-icon"><i class="fa-solid fa-chalkboard"></i></div>
+      <div class="slide-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
       <h1>Мугалимдер үчүн <span>ишенимдүү жардамчы</span></h1>
-      <p>Тарбиялык сааттар, 7-11-класстар үчүн тесттер, сабак пландары жана өз автордук материалдарыңызды жайгаштырып кошумча киреше табуу мүмкүнчүлүгү.</p>
+      <p>Тарбиялык сааттар, 7-11-класстар үчүн тесттер, сабак пландары жана өз материалдарыңызды жайгаштырып киреше табуу.</p>
     </div>
 
     <!-- СЛАЙД 4 -->
     <div class="slide" id="slide-4">
       <div class="slide-icon"><i class="fa-solid fa-shield-halved"></i></div>
-      <h1>Заманбап <span>Архитектура & Коопсуздук</span></h1>
-      <p>Vercel API, Firebase Realtime Database жана коопсуз төлөм тутумдары (MBANK + Freedom Pay) менен толук автоматташтырылган тутум.</p>
+      <h1>Коопсуз жана <span>Ыкчам Тутум</span></h1>
+      <p>Vercel API, Firebase жана MBANK + Freedom Pay аркылуу толук автоматташтырылган төлөмдөр.</p>
     </div>
 
     <!-- СЛАЙД 5 -->
     <div class="slide" id="slide-5">
       <div class="slide-icon"><i class="fa-solid fa-star"></i></div>
-      <h1>Билим берүүнүн жаңы дооруна <span>кошулуңуз!</span></h1>
-      <p>Сайтка кириңиз, катталыңыз жана өзүңүзгө керектүү бардык санариптик ресурстарды заматта табыңыз.</p>
-      <a href="https://bilimal.org" target="_blank" class="cta-btn">
-        <i class="fa-solid fa-arrow-right-to-bracket"></i> bilimal.org сайтына өтүү
-      </a>
+      <h1>Билим берүүнүн <span>жаңы доору!</span></h1>
+      <p>Сайтка кириңиз жана өзүңүзгө керектүү бардык санариптик ресурстарды табыңыз.</p>
+      <a href="https://bilimal.org" target="_blank" class="cta-btn">bilimal.org сайтына өтүү <i class="fa-solid fa-arrow-right"></i></a>
     </div>
 
-    <!-- БАШКАРУУ ПАНЕЛИ -->
-    <div class="controls">
-      <button class="nav-btn" onclick="prevSlide()"><i class="fa-solid fa-arrow-left"></i> Мурунку</button>
-      
-      <div class="dots">
-        <span class="dot active" onclick="currentSlide(1)"></span>
-        <span class="dot" onclick="currentSlide(2)"></span>
-        <span class="dot" onclick="currentSlide(3)"></span>
-        <span class="dot" onclick="currentSlide(4)"></span>
-        <span class="dot" onclick="currentSlide(5)"></span>
+    <!-- Төмөнкү башкаруу -->
+    <div class="footer-controls">
+      <div class="nav-hints">
+        <span>⬅️ Мурунку</span>
+        <span>🖱️ Скролл же свайп</span>
+        <span>Кийинки ➡️</span>
       </div>
-
-      <button class="nav-btn" onclick="nextSlide()">Кийинки <i class="fa-solid fa-arrow-right"></i></button>
     </div>
 
   </div>
 
-  <div class="scroll-hint">🖱️ Мышканын дөңгөлөгүн тегеретиңиз</div>
-
   <script>
-    let slideIndex = 1;
-    const totalSlides = 5;
-    let isScrolling = false;
+    let slideIndex = 0;
+    const slides = document.querySelectorAll(".slide");
+    const bars = document.querySelectorAll(".bar");
+    const totalSlides = slides.length;
+    let slideInterval;
+    const slideDuration = 5000; // 5 секунд
 
-    showSlides(slideIndex);
+    function showSlide(n) {
+      slides.forEach(s => s.classList.remove("active"));
+      bars.forEach((b, idx) => {
+        b.classList.remove("active", "completed");
+        if (idx < n) b.classList.add("completed");
+      });
+
+      slideIndex = (n + totalSlides) % totalSlides;
+      slides[slideIndex].classList.add("active");
+      bars[slideIndex].classList.add("active");
+
+      resetTimer();
+    }
 
     function nextSlide() {
-      if (slideIndex < totalSlides) {
-        slideIndex++;
-        showSlides(slideIndex);
-      }
+      showSlide(slideIndex + 1);
     }
 
     function prevSlide() {
-      if (slideIndex > 1) {
-        slideIndex--;
-        showSlides(slideIndex);
-      }
+      showSlide(slideIndex - 1);
     }
 
-    function currentSlide(n) {
-      slideIndex = n;
-      showSlides(slideIndex);
+    function resetTimer() {
+      clearInterval(slideInterval);
+      slideInterval = setInterval(nextSlide, slideDuration);
     }
 
-    function showSlides(n) {
-      let slides = document.getElementsByClassName("slide");
-      let dots = document.getElementsByClassName("dot");
-      
-      for (let i = 0; i < slides.length; i++) {
-        slides[i].classList.remove("active");
-      }
-      
-      for (let i = 0; i < dots.length; i++) {
-        dots[i].classList.remove("active");
-      }
-      
-      slides[n - 1].classList.add("active");
-      dots[n - 1].classList.add("active");
-    }
+    // Баштоо
+    showSlide(0);
 
-    // МЫШКАНЫН ДӨҢГӨЛӨГҮ (SCROLL) МЕНЕН БАШКАРУУ ЛОГИКАСЫ
-    window.addEventListener('wheel', function(event) {
-      if (isScrolling) return;
-      isScrolling = true;
-
-      if (event.deltaY > 0) {
-        // Төмөн көздөй тегеретсе — кийинки слайд
-        if (slideIndex < totalSlides) {
-          slideIndex++;
-          showSlides(slideIndex);
-        }
+    // Мышканын дөңгөлөгү (Scroll) менен башкаруу
+    const card = document.getElementById('reelsCard');
+    card.addEventListener('wheel', (e) => {
+      if (e.deltaY > 0) {
+        nextSlide();
       } else {
-        // Өйдө көздөй тегеретсе — мурунку слайд
-        if (slideIndex > 1) {
-          slideIndex--;
-          showSlides(slideIndex);
-        }
+        prevSlide();
       }
+    });
 
-      // Скроллдун ылдамдыгын жөнгө салуу үчүн коопсуздук интервалы
-      setTimeout(() => {
-        isScrolling = false;
-      }, 800);
-    }, { passive: true });
+    // Мобилдик түзмөктөр үчүн Touch (Swipe) колдоосу
+    let touchStartY = 0;
+    card.addEventListener('touchstart', e => {
+      touchStartY = e.touches[0].clientY;
+    });
+
+    card.addEventListener('touchend', e => {
+      let touchEndY = e.changedTouches[0].clientY;
+      if (touchStartY - touchEndY > 50) {
+        nextSlide(); // Өйдө свайп
+      } else if (touchEndY - touchStartY > 50) {
+        prevSlide(); // Ылдый свайп
+      }
+    });
   </script>
 </body>
 </html>
