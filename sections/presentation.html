@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ky">
 <head>
@@ -74,6 +73,35 @@ body{
 }
 .scene.active{opacity:1;visibility:visible;transform:none}
 .scene.exit{opacity:0;transform:translateY(-30px) scale(1.03);filter:blur(7px)}
+/* Ар бир слайд үчүн өзүнчө кинематографиялык өтүү */
+.scene.fx-left.active{animation:enterLeft .95s cubic-bezier(.16,1,.3,1) both}
+.scene.fx-right.active{animation:enterRight .95s cubic-bezier(.16,1,.3,1) both}
+.scene.fx-zoom.active{animation:enterZoom 1.05s cubic-bezier(.16,1,.3,1) both}
+.scene.fx-rotate.active{animation:enterRotate 1.05s cubic-bezier(.16,1,.3,1) both}
+.scene.fx-up.active{animation:enterUp .9s cubic-bezier(.16,1,.3,1) both}
+.scene.fx-down.active{animation:enterDown .9s cubic-bezier(.16,1,.3,1) both}
+.scene.fx-blur.active{animation:enterBlur 1.1s cubic-bezier(.16,1,.3,1) both}
+.scene.fx-flip.active{animation:enterFlip 1.05s cubic-bezier(.16,1,.3,1) both}
+.scene.fx-left.exit{transform:translateX(-12vw) scale(.96);filter:blur(5px)}
+.scene.fx-right.exit{transform:translateX(12vw) scale(.96);filter:blur(5px)}
+.scene.fx-zoom.exit{transform:scale(1.28);filter:blur(12px)}
+.scene.fx-rotate.exit{transform:rotate(-5deg) scale(.92);filter:blur(8px)}
+.scene.fx-up.exit{transform:translateY(-10vh) scale(.98);filter:blur(5px)}
+.scene.fx-down.exit{transform:translateY(10vh) scale(.98);filter:blur(5px)}
+.scene.fx-blur.exit{transform:scale(1.08);filter:blur(22px)}
+.scene.fx-flip.exit{transform:perspective(1200px) rotateY(28deg) scale(.92);filter:blur(6px)}
+@keyframes enterLeft{from{opacity:0;transform:translateX(14vw) rotateY(-9deg) scale(.96);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes enterRight{from{opacity:0;transform:translateX(-14vw) rotateY(9deg) scale(.96);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes enterZoom{0%{opacity:0;transform:scale(.55);filter:blur(16px)}65%{opacity:1;transform:scale(1.035);filter:blur(0)}100%{transform:scale(1)}}
+@keyframes enterRotate{from{opacity:0;transform:perspective(1200px) rotateY(-24deg) scale(.86);filter:blur(9px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes enterUp{from{opacity:0;transform:translateY(12vh) scale(.97);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes enterDown{from{opacity:0;transform:translateY(-12vh) scale(.97);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes enterBlur{0%{opacity:0;transform:scale(1.12);filter:blur(24px)}100%{opacity:1;transform:scale(1);filter:blur(0)}}
+@keyframes enterFlip{from{opacity:0;transform:perspective(1200px) rotateY(35deg) translateX(7vw) scale(.9);filter:blur(7px)}to{opacity:1;transform:none;filter:blur(0)}}
+.scene.active .card{animation:cardRise .7s cubic-bezier(.16,1,.3,1) both}
+.scene.active .card:nth-child(2){animation-delay:.08s}.scene.active .card:nth-child(3){animation-delay:.16s}.scene.active .card:nth-child(4){animation-delay:.24s}
+@keyframes cardRise{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+
 .content{width:min(1180px,100%);position:relative}
 .eyebrow{
   color:var(--cyan);font-size:12px;letter-spacing:3px;
@@ -241,16 +269,61 @@ h2{
   .card{padding:11px}.card p{line-height:1.3}
   .visual{min-height:250px}
 }
+
+/* WOW upgrade */
+body::after{content:"";position:fixed;inset:0;z-index:4;pointer-events:none;opacity:.12;background:repeating-linear-gradient(to bottom,transparent 0 3px,#8deaff0b 4px);mix-blend-mode:screen}
+#cursorGlow{position:fixed;left:0;top:0;width:360px;height:360px;border-radius:50%;pointer-events:none;z-index:1;opacity:0;background:radial-gradient(circle,#4cecff19,#866bff10 30%,transparent 70%);transform:translate(-50%,-50%);transition:opacity .35s}
+body:hover #cursorGlow{opacity:1}
+.scene .content{transform-style:preserve-3d;will-change:transform;transition:transform .18s ease-out}
+.scene.active h1,.scene.active h2{animation:titleReveal 1s cubic-bezier(.16,1,.3,1) both}
+@keyframes titleReveal{from{opacity:0;transform:translateY(28px) scale(.97);filter:blur(12px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+.scene.active .eyebrow{animation:eyebrowReveal .8s .08s both}
+@keyframes eyebrowReveal{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+.card,.holo,.floatbox,.cta{transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+.card:hover{transform:translateY(-7px) scale(1.025)!important;border-color:#6cf5ffbb;box-shadow:0 18px 55px #31dfff22,inset 0 0 25px #6cf5ff0a}
+.cta:hover{transform:translateY(-3px);box-shadow:0 0 42px #38dfff55;border-color:var(--cyan)}
+#controls{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:25;display:flex;align-items:center;gap:8px;padding:7px;border:1px solid #8db5ff3b;border-radius:16px;background:#070d22c9;backdrop-filter:blur(16px);box-shadow:0 10px 40px #0005}
+#controls button{border:1px solid #8db5ff40;background:#111d3b;color:#eaf8ff;border-radius:10px;min-width:38px;height:36px;padding:0 12px;font:700 12px Segoe UI,Arial;cursor:pointer;transition:.2s}
+#controls button:hover{background:#173b5b;border-color:#6cf5ff;box-shadow:0 0 18px #6cf5ff25}
+#controls .primary{color:#061322;background:linear-gradient(100deg,#6cf5ff,#a6a0ff)}
+#intro{position:fixed;inset:0;z-index:100;display:grid;place-items:center;text-align:center;background:radial-gradient(ellipse at center,#101d48 0,#050817 66%);transition:opacity .9s ease,visibility .9s}
+#intro.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.introCore{position:relative;width:min(68vw,330px);aspect-ratio:1;margin:0 auto 24px;display:grid;place-items:center}
+.introCore:before,.introCore:after{content:"";position:absolute;inset:4%;border:1px solid #6cf5ff88;border-radius:50%;box-shadow:0 0 35px #5feaff20;animation:spin 8s linear infinite}
+.introCore:after{inset:15%;border-color:#b46bff99;animation-duration:5s;animation-direction:reverse}
+.introB{width:42%;aspect-ratio:1;display:grid;place-items:center;border-radius:25%;color:white;font-size:clamp(65px,10vw,100px);font-weight:1000;background:linear-gradient(145deg,#183f72,#21123e);border:1px solid #6cf5ff;box-shadow:0 0 80px #37dfff55,inset 0 0 35px #7af4ff22;animation:corefloat 2.5s ease-in-out infinite}
+#intro h1{font-size:clamp(38px,7vw,78px);letter-spacing:-2px;margin:0 0 14px}
+#intro p{color:#b9c9ed;letter-spacing:2px;font-size:clamp(10px,1.5vw,14px);margin:0 0 28px}
+#startShow{cursor:pointer;border:1px solid #8df8ff;padding:15px 25px;border-radius:13px;color:#061322;font-weight:900;letter-spacing:1px;background:linear-gradient(100deg,#6cf5ff,#a79aff,#ff9cdb);box-shadow:0 0 35px #55eaff40;animation:buttonPulse 2s ease-in-out infinite}
+@keyframes buttonPulse{50%{box-shadow:0 0 55px #55eaff75;transform:scale(1.025)}}
+#soundNotice{font-size:10px;color:#8fa4d4;margin-top:15px;letter-spacing:1px}
+@media(max-width:760px){#controls{bottom:9px;gap:5px;padding:5px}#controls button{min-width:33px;height:32px;padding:0 8px}.hint{display:none}#cursorGlow{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
-<div class="aurora"></div><div class="grid"></div>
+<div class="aurora"></div><div class="grid"></div><div id="cursorGlow"></div>
+<div id="intro" role="dialog" aria-label="Bilimal презентациясын баштоо">
+ <div>
+  <div class="introCore"><div class="introB">B</div></div>
+  <h1><span class="gradient">BILIMAL.ORG</span></h1>
+  <p>БИЛИМДИН САНАРИП ААЛАМЫ</p>
+  <button id="startShow">▶ ПРЕЗЕНТАЦИЯНЫ БАШТОО</button>
+  <div id="soundNotice">ЭҢ ЖАКШЫ ТАЖРЫЙБА ҮЧҮН ҮНДҮ КҮЙГҮЗҮҢҮЗ</div>
+ </div>
+</div>
 <canvas id="stars"></canvas>
 <div class="topline"><div id="progress"></div></div>
 <div class="brand"><div class="logo">B</div><div>BILIMAL<small>БИЛИМДИН САНАРИП ААЛАМЫ</small></div></div>
 <div class="counter" id="counter">01 / 11</div>
 <div class="hint">ҮН: <b id="soundState">КҮТҮҮДӨ</b> · SPACE — ҮНДҮ ӨЧҮРҮҮ · F — FULLSCREEN</div>
 <div id="flash"></div><div id="warp"></div>
+<nav id="controls" aria-label="Презентацияны башкаруу">
+ <button id="prevBtn" title="Мурунку слайд (←)">◀</button>
+ <button id="playBtn" class="primary" title="Кийинки слайд (→)">КИЙИНКИ ⟶</button>
+ <button id="soundBtn" title="Үндү күйгүзүү/өчүрүү (Space)">♫ ҮН</button>
+ <button id="fullBtn" title="Толук экран (F)">⛶</button>
+</nav>
 
 <main class="stage">
 
@@ -429,6 +502,7 @@ const flash=document.getElementById('flash');
 const warp=document.getElementById('warp');
 let current=0,timer=null,started=false,muted=false,audioCtx=null,master=null;
 let sceneStart=performance.now();
+scenes.forEach((scene,index)=>{scene.classList.remove('fx-left','fx-right','fx-zoom','fx-rotate','fx-up','fx-down','fx-blur','fx-flip');scene.classList.add(['fx-zoom','fx-left','fx-rotate','fx-up','fx-blur','fx-right','fx-flip','fx-down','fx-zoom','fx-left','fx-rotate'][index%11]);});
 
 function initAudio(){
  if(started){
@@ -507,13 +581,22 @@ function schedule(){
  progress.style.width='0%';
  timer=setTimeout(()=>go(1),Number(scenes[current].dataset.duration||7600));
 }
+const transitionTypes=['fx-zoom','fx-left','fx-rotate','fx-up','fx-blur','fx-right','fx-flip','fx-down','fx-zoom','fx-left','fx-rotate'];
+function applyTransition(el,index){
+ el.classList.remove('fx-left','fx-right','fx-zoom','fx-rotate','fx-up','fx-down','fx-blur','fx-flip');
+ el.classList.add(transitionTypes[(index+transitionTypes.length)%transitionTypes.length]);
+}
 function go(dir){
  initAudio();
  const old=current;
  current=(current+dir+scenes.length)%scenes.length;
+ applyTransition(scenes[old],old);
+ applyTransition(scenes[current],current);
  scenes[old].classList.remove('active');
  scenes[old].classList.add('exit');
- setTimeout(()=>scenes[old].classList.remove('exit'),1150);
+ setTimeout(()=>scenes[old].classList.remove('exit'),1250);
+ scenes[current].classList.remove('active');
+ void scenes[current].offsetWidth;
  scenes[current].classList.add('active');
  counter.textContent=String(current+1).padStart(2,'0')+' / '+String(scenes.length).padStart(2,'0');
  flash.classList.remove('go');warp.classList.remove('go');
@@ -569,7 +652,7 @@ function drawStars(){
 }
 function burst(){
  const cx=innerWidth*.5,cy=innerHeight*.5;
- for(let i=0;i<42;i++){
+ for(let i=0;i<100;i++){
   const a=Math.random()*Math.PI*2,spd=Math.random()*5+1;
   parts.push({x:cx,y:cy,vx:Math.cos(a)*spd,vy:Math.sin(a)*spd,
   life:1,r:Math.random()*2.5+.6,h:Math.random()<.5?185:255});
@@ -601,6 +684,49 @@ function drawParts(){
  ctx.shadowBlur=0;
  requestAnimationFrame(drawParts);
 }
+// Кинематографиялык башталыш жана колдонуучуга ыңгайлуу башкаруу.
+const intro=document.getElementById('intro');
+const startShow=document.getElementById('startShow');
+const cursorGlow=document.getElementById('cursorGlow');
+let startedShow=false;
+function beginShow(){
+  if(startedShow)return;
+  startedShow=true;
+  initAudio();
+  intro.classList.add('hidden');
+  schedule();
+  burst();
+}
+startShow.addEventListener('click',beginShow);
+document.getElementById('prevBtn').addEventListener('click',()=>go(-1));
+document.getElementById('playBtn').addEventListener('click',()=>go(1));
+document.getElementById('soundBtn').addEventListener('click',()=>{initAudio();setMuted()});
+document.getElementById('fullBtn').addEventListener('click',()=>{
+  if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();
+  else document.exitFullscreen?.();
+});
+document.addEventListener('pointermove',e=>{
+  if(cursorGlow){cursorGlow.style.left=e.clientX+'px';cursorGlow.style.top=e.clientY+'px'}
+  if(innerWidth>760){
+    const active=document.querySelector('.scene.active .content');
+    if(active){
+      const rx=(e.clientY/innerHeight-.5)*-2.2;
+      const ry=(e.clientX/innerWidth-.5)*2.2;
+      active.style.transform=`perspective(1200px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+    }
+  }
+});
+document.addEventListener('pointerleave',()=>{
+  document.querySelectorAll('.scene .content').forEach(el=>el.style.transform='');
+});
+document.addEventListener('keydown',e=>{
+  if(e.code==='Enter'&&!startedShow)beginShow();
+});
+const baseGo=go;
+go=function(dir){
+  if(!startedShow){beginShow();return}
+  baseGo(dir);
+};
 addEventListener('resize',resize);
 resize();drawStars();drawParts();
 setInterval(()=>{
@@ -608,7 +734,7 @@ setInterval(()=>{
  const dur=Number(scenes[current].dataset.duration||7600);
  progress.style.width=Math.min(100,elapsed/dur*100)+'%';
 },100);
-schedule();
+// Автоматтык көрсөтүү beginShow() басылгандан кийин башталат.
 })();
 </script>
 </body>
