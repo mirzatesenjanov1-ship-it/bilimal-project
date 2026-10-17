@@ -3,687 +3,612 @@
 <html lang="ky">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#030612">
-<title>Bilimal.org | Билим ааламы</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bilimal.org — Билимдин жаңы өлчөмү</title>
 <style>
-:root {
-  --cyan:#64e6ff;
-  --blue:#438bff;
-  --purple:#bd8cff;
-  --pink:#ff83db;
-  --white:#f5f8ff;
-  --muted:#bfd0ec;
+:root{
+  --bg:#050817;--cyan:#6cf5ff;--blue:#718cff;
+  --purple:#b46bff;--pink:#ff76ce;--white:#f4f7ff;
 }
-* {box-sizing:border-box}
-html,body {
-  width:100%;height:100%;margin:0;overflow:hidden;
-  background:#030612;color:var(--white);
-  font-family:"Segoe UI",Arial,sans-serif;
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{
+  background:radial-gradient(ellipse at center,#101b42,#050817 70%);
+  color:var(--white);font-family:Segoe UI,Arial,sans-serif
 }
-body {isolation:isolate}
-#space {
-  position:fixed;inset:0;width:100%;height:100%;z-index:-4;
+#stars{position:fixed;inset:0;width:100%;height:100%;z-index:0}
+.aurora{
+  position:fixed;inset:-40%;z-index:0;pointer-events:none;
+  background:conic-gradient(from 0deg,transparent,#174eff44,
+  #a62fff55,transparent,#13eaff44,transparent);
+  filter:blur(80px);animation:aurora 24s linear infinite
 }
-.aurora {
-  position:fixed;inset:-35%;z-index:-3;pointer-events:none;
-  background:
-    radial-gradient(ellipse at 22% 30%,#1767d966,transparent 38%),
-    radial-gradient(ellipse at 80% 32%,#8639c455,transparent 40%),
-    radial-gradient(ellipse at 50% 85%,#00b9d933,transparent 42%);
-  filter:blur(42px);
-  animation:aurora 9s ease-in-out infinite alternate;
+@keyframes aurora{to{transform:rotate(360deg)}}
+.grid{
+  position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.14;
+  background-image:linear-gradient(#7aa7ff33 1px,transparent 1px),
+  linear-gradient(90deg,#7aa7ff33 1px,transparent 1px);
+  background-size:48px 48px;
+  mask-image:radial-gradient(ellipse,#000,transparent 78%);
+  animation:gridmove 15s linear infinite
 }
-@keyframes aurora {
-  0%{transform:translate(-2%,2%) rotate(0) scale(1)}
-  100%{transform:translate(3%,-3%) rotate(8deg) scale(1.14)}
-}
-.scanlines {
-  position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.12;
-  background:repeating-linear-gradient(
-    0deg,transparent 0 3px,#9ddfff0a 4px
-  );
-}
-#progress {
-  position:fixed;z-index:100;top:0;left:0;width:0;height:4px;
+@keyframes gridmove{to{background-position:48px 48px}}
+.topline{position:fixed;top:0;left:0;right:0;height:3px;z-index:20;background:#fff1}
+#progress{
+  width:0;height:100%;
   background:linear-gradient(90deg,var(--cyan),var(--purple),var(--pink));
-  box-shadow:0 0 20px var(--cyan);
+  box-shadow:0 0 18px var(--cyan)
 }
-.brand {
-  position:fixed;z-index:50;top:23px;left:28px;
-  font-weight:950;font-size:15px;letter-spacing:-.4px;
-  text-shadow:0 0 22px #4dbdff77;
+.brand{
+  position:fixed;top:24px;left:28px;z-index:10;
+  display:flex;align-items:center;gap:12px;font-weight:900;
+  letter-spacing:2px;font-size:19px
 }
-.brand span {color:var(--cyan)}
-.status {
-  position:fixed;z-index:50;top:25px;right:25px;
-  font-size:10px;letter-spacing:1.5px;color:#b8d8ff;
+.logo{
+  width:40px;height:40px;display:grid;place-items:center;
+  border:1px solid #6cf5ff99;border-radius:12px;
+  color:var(--cyan);font-size:23px;
+  background:#6cf5ff12;box-shadow:0 0 25px #27dfff33;
+  transform:rotate(-8deg)
 }
-.scene {
+.brand small{
+  display:block;font-size:9px;letter-spacing:3px;
+  color:#aab9e5;margin-top:3px
+}
+.counter{
+  position:fixed;top:32px;right:30px;z-index:10;
+  font-size:12px;letter-spacing:3px;color:#aebde5
+}
+.hint{
+  position:fixed;bottom:18px;right:24px;z-index:10;
+  color:#9aa9cf;font-size:10px;letter-spacing:1px
+}
+.hint b{color:var(--cyan)}
+.stage{position:relative;width:100%;height:100%;z-index:2}
+.scene{
   position:absolute;inset:0;display:flex;align-items:center;
-  justify-content:center;text-align:center;
-  padding:70px 6vw 45px;
-  opacity:0;visibility:hidden;transform:scale(1.07);
-  transition:opacity .9s ease,transform 1.3s ease,visibility .9s;
-  overflow:hidden;
+  justify-content:center;padding:75px 8vw 55px;
+  opacity:0;visibility:hidden;transform:translateY(35px) scale(.97);
+  transition:opacity .9s ease,transform 1s cubic-bezier(.2,.8,.2,1),
+  visibility .9s
 }
-.scene.active {
-  opacity:1;visibility:visible;transform:scale(1);
+.scene.active{opacity:1;visibility:visible;transform:none}
+.scene.exit{opacity:0;transform:translateY(-30px) scale(1.03);filter:blur(7px)}
+.content{width:min(1180px,100%);position:relative}
+.eyebrow{
+  color:var(--cyan);font-size:12px;letter-spacing:3px;
+  text-transform:uppercase;margin-bottom:20px
 }
-.content {position:relative;z-index:3;width:min(100%,1080px)}
-.kicker {
-  color:var(--cyan);font-weight:850;
-  font-size:clamp(10px,1.3vw,15px);
-  letter-spacing:.28em;margin-bottom:22px;
+.eyebrow:before{content:"";display:inline-block;width:30px;height:1px;
+  background:var(--cyan);vertical-align:middle;margin-right:10px}
+h1,h2,p{margin-top:0}
+h1{
+  font-size:clamp(44px,7.3vw,100px);line-height:.98;
+  letter-spacing:-4px;margin-bottom:24px;font-weight:950
 }
-h1,h2,p {margin-top:0}
-h1 {
-  font-size:clamp(43px,9vw,115px);line-height:.98;
-  letter-spacing:-.065em;font-weight:950;margin-bottom:22px;
+h2{
+  font-size:clamp(34px,5vw,64px);line-height:1.04;
+  letter-spacing:-2px;margin-bottom:20px;font-weight:900
 }
-h2 {
-  font-size:clamp(32px,5.7vw,72px);line-height:1.04;
-  letter-spacing:-.045em;margin-bottom:17px;
+.gradient{
+  background:linear-gradient(100deg,#fff,#9cf8ff 35%,#9c8dff 68%,#ff9cdb);
+  -webkit-background-clip:text;background-clip:text;color:transparent
 }
-p {
-  max-width:780px;margin:0 auto;color:var(--muted);
-  font-size:clamp(14px,1.7vw,21px);line-height:1.7;
+.lead{
+  max-width:730px;color:#c0cbe7;
+  font-size:clamp(15px,1.5vw,21px);line-height:1.6
 }
-.gradient {
-  background:linear-gradient(100deg,#67e5ff,#a7a5ff 55%,#ffa3e6);
-  color:transparent;background-clip:text;-webkit-background-clip:text;
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:3vw;align-items:center}
+.orbital{
+  position:relative;width:min(38vw,450px);aspect-ratio:1;
+  margin:auto;display:grid;place-items:center
 }
-.tag {
-  display:inline-block;margin-top:24px;padding:10px 16px;
-  border:1px solid #79dfff66;border-radius:50px;
-  background:#2775b522;color:#c6efff;font-size:10px;
-  letter-spacing:.14em;
+.orbit{
+  position:absolute;inset:10%;border:1px solid #6cf5ff66;
+  border-radius:50%;transform:rotate(-25deg) scaleY(.48);
+  animation:spin 9s linear infinite
 }
-.logo {
-  font-weight:1000;letter-spacing:-.075em;
-  font-size:clamp(58px,12vw,145px);line-height:.95;
-  filter:drop-shadow(0 0 35px #4a8dff44);
+.orbit:nth-child(2){
+  inset:0;border-color:#b46bff88;
+  transform:rotate(50deg) scaleY(.55);animation-duration:13s;
+  animation-direction:reverse
 }
-.logo small {
-  display:block;color:white;font-size:.43em;letter-spacing:.03em;
-  margin-top:7px;
+.orbit:nth-child(3){
+  inset:20%;border-color:#ff76ce88;
+  transform:rotate(80deg) scaleY(.5);animation-duration:7s
 }
-.emblem {
-  width:clamp(80px,11vw,135px);aspect-ratio:1;margin:0 auto 28px;
-  display:grid;place-items:center;border-radius:30%;
-  font-size:clamp(42px,7vw,80px);
-  border:1px solid #81e1ff88;
-  background:linear-gradient(145deg,#1c8cff55,#ae6dff33);
-  box-shadow:0 0 55px #408cff55,inset 0 0 30px #9d8fff22;
-  animation:emblem 4s ease-in-out infinite;
+@keyframes spin{to{rotate:360deg}}
+.core{
+  width:37%;aspect-ratio:1;border-radius:28%;
+  display:grid;place-items:center;font-size:85px;font-weight:1000;
+  color:#fff;background:linear-gradient(145deg,#182f6a,#15112f);
+  border:1px solid #83f6ff99;
+  box-shadow:inset 0 0 35px #54e7ff33,0 0 65px #457dff66;
+  transform:rotate(45deg);animation:corefloat 4s ease-in-out infinite
 }
-@keyframes emblem {
-  50%{transform:translateY(-8px) rotate(4deg);box-shadow:0 0 85px #408cff88}
+.core span{transform:rotate(-45deg);text-shadow:0 0 25px var(--cyan)}
+@keyframes corefloat{
+  50%{translate:0 -12px;box-shadow:0 0 90px #457dff99}
 }
-.orbit {
-  position:absolute;width:min(76vw,730px);aspect-ratio:1;
-  border:1px solid #7bcdff24;border-radius:50%;
-  left:50%;top:50%;transform:translate(-50%,-50%);
-  animation:spin 24s linear infinite;pointer-events:none;
+.floatbox{
+  position:absolute;padding:12px 15px;border:1px solid #9cb5ff55;
+  background:#09132de8;border-radius:12px;font-size:12px;
+  box-shadow:0 10px 40px #0006;animation:float 5s ease-in-out infinite
 }
-.orbit:before,.orbit:after {
-  content:"";position:absolute;border:1px solid #b28cff29;border-radius:50%;
+.floatbox strong{display:block;color:var(--cyan);font-size:15px;margin-bottom:4px}
+.fb1{top:12%;right:0}.fb2{bottom:18%;left:-3%;animation-delay:-2s}
+.fb3{bottom:3%;right:5%;animation-delay:-3s}
+@keyframes float{50%{transform:translateY(-12px)}}
+.cta{
+  display:inline-flex;gap:12px;align-items:center;margin-top:22px;
+  padding:14px 20px;border:1px solid #75f5ff99;border-radius:12px;
+  background:linear-gradient(100deg,#37d9ff22,#976dff2b);
+  color:white;text-decoration:none;font-weight:800;
+  box-shadow:0 0 30px #38dfff22
 }
-.orbit:before{inset:13%}
-.orbit:after{inset:27%}
-.orbit .satellite {
-  position:absolute;top:10%;left:50%;width:10px;height:10px;
-  border-radius:50%;background:var(--cyan);
-  box-shadow:0 0 20px var(--cyan);
+.cta span:last-child{color:var(--cyan);font-size:21px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:5vw;align-items:center}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:24px}
+.card{
+  position:relative;overflow:hidden;padding:18px;
+  border:1px solid #8eaaff36;border-radius:17px;
+  background:linear-gradient(140deg,#182650bb,#0a1027dd);
+  box-shadow:0 14px 45px #0002;
+  animation:cardin .8s both
 }
-@keyframes spin {to{rotate:360deg}}
-.cards {
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:13px;width:min(100%,970px);margin:26px auto 0;
+.card:nth-child(2){animation-delay:.12s}
+.card:nth-child(3){animation-delay:.24s}
+.card:nth-child(4){animation-delay:.36s}
+@keyframes cardin{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.card .ico{font-size:28px;margin-bottom:9px}
+.card h3{font-size:17px;margin:0 0 8px}
+.card p{font-size:13px;line-height:1.5;color:#b8c5e4;margin:0}
+.visual{
+  min-height:350px;position:relative;display:grid;place-items:center
 }
-.card {
-  position:relative;overflow:hidden;text-align:left;
-  padding:clamp(13px,2vw,23px);
-  border:1px solid #82cfff42;border-radius:17px;
-  background:linear-gradient(145deg,#152b4cdd,#081329ed);
-  box-shadow:0 15px 50px #0003;
-  backdrop-filter:blur(12px);
-  transform:translateZ(0);
-  transition:transform .4s,border-color .4s;
+.ring{
+  position:absolute;width:min(30vw,350px);aspect-ratio:1;
+  border:1px solid #70f3ff66;border-radius:50%;
+  animation:spin 20s linear infinite
 }
-.card:before {
-  content:"";position:absolute;top:-70%;left:-40%;
-  width:60%;height:240%;transform:rotate(25deg);
-  background:linear-gradient(90deg,transparent,#ffffff12,transparent);
-  animation:shine 5s ease-in-out infinite;
+.ring:before,.ring:after{
+  content:"";position:absolute;inset:13%;border:1px dashed #a576ff88;
+  border-radius:50%
 }
-@keyframes shine {
-  0%,50%{left:-80%}80%,100%{left:140%}
+.ring:after{inset:28%;border-style:solid;border-color:#ff77c766}
+.holo{
+  position:relative;width:min(28vw,320px);aspect-ratio:1;
+  border-radius:28px;display:grid;place-items:center;
+  background:linear-gradient(145deg,#152b57cc,#15112fcc);
+  border:1px solid #87edff77;
+  box-shadow:inset 0 0 55px #5bdfff15,0 0 65px #626aff22;
+  transform:rotate(-6deg);animation:holofloat 6s ease-in-out infinite
 }
-.card .icon {
-  position:relative;font-size:clamp(27px,4vw,43px);
-  margin-bottom:12px;filter:drop-shadow(0 0 10px #68cfff44);
+.holo .emoji{font-size:clamp(70px,9vw,120px);filter:drop-shadow(0 0 25px #67eaff88)}
+.holo:after{content:"";position:absolute;inset:10px;border:1px solid #a9bfff33;border-radius:20px}
+.scan{
+  position:absolute;left:8%;right:8%;height:2px;top:20%;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+  box-shadow:0 0 20px var(--cyan);animation:scan 4s ease-in-out infinite
 }
-.card strong {
-  position:relative;display:block;font-size:clamp(12px,1.55vw,18px);
-  margin-bottom:7px;
+@keyframes scan{50%{top:80%}}
+@keyframes holofloat{50%{transform:rotate(-2deg) translateY(-12px)}}
+.list{display:grid;gap:13px;margin-top:24px}
+.listitem{display:flex;gap:13px;align-items:flex-start;color:#d5def4;line-height:1.5}
+.check{
+  flex:0 0 23px;height:23px;border:1px solid #6ff1ff99;
+  border-radius:7px;display:grid;place-items:center;
+  color:var(--cyan);background:#57efff10
 }
-.card small {
-  position:relative;display:block;color:#b5c8e7;
-  font-size:clamp(10px,1.2vw,14px);line-height:1.55;
+.pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.pill{
+  border:1px solid #8db5ff55;background:#0b1535cc;
+  padding:9px 13px;border-radius:999px;color:#d7e5ff;font-size:12px
 }
-.panel {
-  width:min(100%,790px);margin:25px auto 0;text-align:left;
-  padding:clamp(14px,2.5vw,27px);
-  border:1px solid #64dfff77;border-radius:22px;
-  background:linear-gradient(140deg,#0e2746f5,#080f25f7);
-  box-shadow:0 0 70px #268cff22,inset 0 0 35px #317fff0c;
+.quote{font-size:clamp(20px,2.1vw,30px);line-height:1.5;color:#dbe4ff}
+.quote em{font-style:normal;color:var(--cyan)}
+.footerline{width:90px;height:2px;background:linear-gradient(90deg,var(--cyan),var(--purple));margin:24px 0}
+#flash{
+  position:fixed;inset:0;z-index:8;pointer-events:none;opacity:0;
+  background:radial-gradient(ellipse at center,#83faff22,transparent 65%)
 }
-.panel-head {
-  display:flex;align-items:center;justify-content:space-between;
-  gap:12px;padding-bottom:14px;margin-bottom:15px;
-  border-bottom:1px solid #ffffff20;font-size:12px;
+#flash.go{animation:flash .75s ease-out}
+@keyframes flash{20%{opacity:.9}100%{opacity:0}}
+#warp{
+  position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0;
+  background:radial-gradient(ellipse at center,transparent 20%,#060a1b 80%)
 }
-.live {color:#73f5c6;font-size:10px;letter-spacing:1px}
-.circuit {
-  display:flex;justify-content:center;align-items:center;
-  padding:18px 0;gap:0;
+#warp.go{animation:warp .8s ease}
+@keyframes warp{35%{opacity:.8;transform:scale(1.1)}100%{opacity:0;transform:scale(1.7)}}
+@media(max-width:760px){
+  .brand{top:14px;left:14px;font-size:15px}
+  .logo{width:34px;height:34px}.counter{top:25px;right:14px}
+  .scene{padding:75px 7vw 50px}
+  .hero,.split{grid-template-columns:1fr;gap:8px}
+  .hero .orbital{position:absolute;right:-7%;bottom:0;width:45%;opacity:.4}
+  .hero .content{z-index:2}
+  .visual{position:absolute;right:2%;bottom:3%;width:43%;min-height:180px;opacity:.3}
+  .holo,.ring{width:100%}.cards{gap:8px}
+  .card{padding:12px}.card .ico{font-size:22px}
+  .card h3{font-size:14px}.card p{font-size:11px}
+  .lead{max-width:100%}.hint{right:10px;bottom:10px}
+  .floatbox{display:none}
 }
-.node {
-  width:clamp(43px,7vw,72px);aspect-ratio:1;
-  border:1px solid #6ddfffaa;border-radius:15px;
-  display:grid;place-items:center;background:#143657;
-  font-size:clamp(22px,4vw,37px);
-  box-shadow:0 0 28px #45caff30;
-}
-.wire {
-  position:relative;width:clamp(20px,6vw,75px);height:2px;
-  background:#69e7ff;box-shadow:0 0 12px #69e7ff;
-}
-.wire:after {
-  content:"";position:absolute;top:-3px;left:0;
-  width:8px;height:8px;border-radius:50%;background:#fff;
-  box-shadow:0 0 15px white;animation:electron 1.1s linear infinite;
-}
-@keyframes electron {to{left:calc(100% - 8px)}}
-.formula {
-  text-align:center;color:#87edff;font-size:clamp(25px,4vw,43px);
-  font-weight:900;letter-spacing:.08em;margin:12px 0;
-  text-shadow:0 0 25px #36bfff55;
-}
-.planet {
-  position:relative;width:clamp(130px,22vw,250px);aspect-ratio:1;
-  margin:0 auto 25px;border-radius:50%;
-  background:
-    radial-gradient(circle at 27% 25%,#ffffffdd,transparent 4%),
-    radial-gradient(circle at 35% 35%,#8cecff,#2673d2 34%,#372071 70%,#060c22 82%);
-  box-shadow:inset -30px -20px 45px #000b,0 0 70px #4c90ff66;
-  animation:float 5s ease-in-out infinite;
-}
-.planet:before {
-  content:"";position:absolute;left:-28%;top:34%;width:155%;height:35%;
-  border:3px solid #b8c5ff99;border-radius:50%;transform:rotate(-20deg);
-  box-shadow:0 0 22px #9d8aff55;
-}
-@keyframes float {50%{transform:translateY(-10px) rotate(3deg)}}
-.quantum {
-  position:relative;width:180px;height:140px;margin:0 auto 20px;
-}
-.quantum i {
-  position:absolute;left:50%;top:50%;width:130px;height:50px;
-  border:2px solid #6ee4ff99;border-radius:50%;
-  transform:translate(-50%,-50%) rotate(var(--r));
-  box-shadow:0 0 15px #4ad9ff22;
-}
-.quantum b {
-  position:absolute;left:50%;top:50%;width:13px;height:13px;
-  background:#fff;border-radius:50%;transform:translate(-50%,-50%);
-  box-shadow:0 0 25px #8bdfff;
-}
-.final-url {
-  margin-top:24px;font-size:clamp(20px,3.8vw,39px);
-  font-weight:950;letter-spacing:.12em;color:var(--cyan);
-  text-shadow:0 0 30px #36baff66;
-}
-.footer {
-  position:fixed;z-index:50;bottom:15px;left:0;right:0;
-  text-align:center;color:#7894bd;font-size:9px;letter-spacing:.24em;
-  pointer-events:none;
-}
-.scene.active .reveal {animation:reveal .85s both}
-.scene.active .d1{animation-delay:.12s}
-.scene.active .d2{animation-delay:.28s}
-.scene.active .d3{animation-delay:.45s}
-.scene.active .d4{animation-delay:.65s}
-@keyframes reveal {
-  from{opacity:0;transform:translateY(24px);filter:blur(5px)}
-  to{opacity:1;transform:translateY(0);filter:blur(0)}
-}
-@media(max-width:600px) {
-  .brand{top:13px;left:13px;font-size:11px}
-  .status{top:15px;right:13px;font-size:8px}
-  .scene{padding:48px 5vw 32px}
-  .cards{gap:7px;margin-top:18px}
-  .card{padding:10px 8px;border-radius:12px}
-  .card .icon{margin-bottom:7px}
-  .kicker{margin-bottom:13px;letter-spacing:.17em}
-  .tag{margin-top:15px}
-  .footer{bottom:8px;font-size:7px}
-}
-@media(max-height:650px) {
-  .scene{padding-top:36px;padding-bottom:25px}
-  .kicker{margin-bottom:9px}
-  h1{margin-bottom:12px}
-  h2{margin-bottom:9px}
-  .emblem{width:60px;margin-bottom:12px}
-  .cards{margin-top:13px}
-  .card{padding:9px}
-  .card .icon{margin-bottom:5px}
-  .panel{margin-top:10px;padding:12px}
-  .planet{width:105px;margin-bottom:10px}
-}
-@media(prefers-reduced-motion:reduce) {
-  *,*:before,*:after{animation-duration:.01ms!important}
+@media(max-height:650px){
+  .scene{padding-top:58px;padding-bottom:35px}
+  .eyebrow{margin-bottom:12px}
+  h2{margin-bottom:12px}.lead{line-height:1.4}
+  .card{padding:11px}.card p{line-height:1.3}
+  .visual{min-height:250px}
 }
 </style>
 </head>
 <body>
-<canvas id="space"></canvas>
-<div class="aurora"></div>
-<div class="scanlines"></div>
-<div id="progress"></div>
-<div class="brand">BILI<span>MAL</span>.ORG</div>
-<div class="status" id="soundStatus">♫ ҮНДҮ КҮЙГҮЗҮҮ ҮЧҮН БАССАҢЫЗ</div>
+<div class="aurora"></div><div class="grid"></div>
+<canvas id="stars"></canvas>
+<div class="topline"><div id="progress"></div></div>
+<div class="brand"><div class="logo">B</div><div>BILIMAL<small>БИЛИМДИН САНАРИП ААЛАМЫ</small></div></div>
+<div class="counter" id="counter">01 / 11</div>
+<div class="hint">ҮН: <b id="soundState">КҮТҮҮДӨ</b> · SPACE — ҮНДҮ ӨЧҮРҮҮ · F — FULLSCREEN</div>
+<div id="flash"></div><div id="warp"></div>
 
-<main id="show">
+<main class="stage">
 
-<section class="scene active">
-  <div class="orbit"><i class="satellite"></i></div>
-  <div class="content">
-    <div class="kicker reveal">Келечек азыр башталат</div>
-    <div class="emblem reveal d1">✦</div>
-    <h1 class="reveal d2">БИЛИМ<br><span class="gradient">ААЛАМЫ</span></h1>
-    <p class="reveal d3">Бир платформа. Миңдеген мүмкүнчүлүктөр.</p>
+<section class="scene active" data-duration="8500">
+ <div class="content hero">
+  <div>
+   <div class="eyebrow">САНАРИП БИЛИМ БЕРҮҮ ПЛАТФОРМАСЫ</div>
+   <h1><span class="gradient">Билимдин</span><br>жаңы <span class="gradient">өлчөмү.</span></h1>
+   <p class="lead">Окуу, изилдөө, эксперимент жана оюн бир ааламда. Bilimal.org — билимди кызыктуу жана жеткиликтүү кылууга багытталган санарип билим берүү мейкиндиги.</p>
+   <a class="cta" href="https://bilimal.org/" target="_blank" rel="noopener">bilimal.org <span>↗</span></a>
   </div>
+  <div class="orbital">
+   <div class="orbit"></div><div class="orbit"></div><div class="orbit"></div>
+   <div class="core"><span>B</span></div>
+   <div class="floatbox fb1"><strong>БИЛИМ</strong>Изилде · Үйрөн</div>
+   <div class="floatbox fb2"><strong>ОЮН</strong>Тажрыйба · Аракет</div>
+   <div class="floatbox fb3"><strong>ИЛИМ</strong>Суроо бер · Тап</div>
+  </div>
+ </div>
 </section>
 
-<section class="scene">
-  <div class="content">
-    <div class="kicker reveal">Жаңы муундагы билим берүү</div>
-    <div class="logo reveal d1"><span class="gradient">Bilimal</span><small>.org</small></div>
-    <p class="reveal d2">Бала бакчадан мектепке, лабораториядан космоско чейинки билим сапары.</p>
-    <div class="tag reveal d3">ОКУ • ИЗИЛДЕ • ЖАРАТ</div>
+<section class="scene" data-duration="7600">
+ <div class="content split">
+  <div>
+   <div class="eyebrow">01 · КИЧИНЕКЕЙ ИЗИЛДӨӨЧҮЛӨР</div>
+   <h2>Билимге жол<br><span class="gradient">оюндан башталат.</span></h2>
+   <p class="lead">Бала бакча бөлүмүндө кичинекей балдарга ылайык интерактивдүү тапшырмалар аркылуу алгачкы түшүнүктөрдү бекемдөөгө шарт түзүлөт.</p>
+   <div class="list">
+    <div class="listitem"><span class="check">✦</span><span>Түстөрдү таануу жана айырмалоо.</span></div>
+    <div class="listitem"><span class="check">✦</span><span>Тамгалар жана сандар менен таанышуу.</span></div>
+    <div class="listitem"><span class="check">✦</span><span>Анимациялуу логикалык тапшырмалар.</span></div>
+   </div>
   </div>
+  <div class="visual"><div class="ring"></div><div class="holo"><div class="scan"></div><div class="emoji">🧩</div></div></div>
+ </div>
 </section>
 
-<section class="scene">
-  <div class="content">
-    <div class="kicker reveal">Билимге алгачкы кадам</div>
-    <h2 class="reveal d1">Бала бакча<br><span class="gradient">дүйнөсү</span></h2>
-    <div class="cards reveal d2">
-      <div class="card"><div class="icon">🎨</div><strong>Түстөр</strong><small>Түстөрдү таануу жана айырмалоо</small></div>
-      <div class="card"><div class="icon">🔤</div><strong>Тамгалар</strong><small>Алгачкы сабаттуулук</small></div>
-      <div class="card"><div class="icon">🔢</div><strong>Сандар</strong><small>Логика жана эсептөө</small></div>
-    </div>
-    <div class="tag reveal d3">ҮЙРӨНҮҮ ОЮНДАН БАШТАЛАТ</div>
+<section class="scene" data-duration="7800">
+ <div class="content split">
+  <div>
+   <div class="eyebrow">02 · ОКУУ МАТЕРИАЛДАРЫ</div>
+   <h2>Керектүү билим<br><span class="gradient">бир жерде.</span></h2>
+   <p class="lead">Окуучулар жана мугалимдер окууга керектүү материалдарды издеп, предметтер боюнча кошумча ресурстарды пайдалана алышат.</p>
+   <div class="cards">
+    <article class="card"><div class="ico">📚</div><h3>Электрондук китептер</h3><p>Мектеп окуу китептери, методикалык колдонмолор жана илимий адабияттар.</p></article>
+    <article class="card"><div class="ico">📝</div><h3>Үй тапшырмалар</h3><p>Предметтер боюнча тапшырмалар жана окууга кошумча материалдар.</p></article>
+   </div>
   </div>
+  <div class="visual"><div class="ring"></div><div class="holo"><div class="scan"></div><div class="emoji">📖</div></div></div>
+ </div>
 </section>
 
-<section class="scene">
-  <div class="content">
-    <div class="kicker reveal">Окуучулар үчүн</div>
-    <h2 class="reveal d1">Билимдин эшиги<br><span class="gradient">ар дайым ачык</span></h2>
-    <div class="cards reveal d2">
-      <div class="card"><div class="icon">🎒</div><strong>Үй тапшырмалар</strong><small>Предметтер жана кошумча окуу материалдары</small></div>
-      <div class="card"><div class="icon">📚</div><strong>Электрондук китептер</strong><small>Китептер жана илимий адабияттар</small></div>
-      <div class="card"><div class="icon">🧠</div><strong>Билимди бекемдөө</strong><small>Кайталоо жана өз алдынча үйрөнүү</small></div>
-    </div>
+<section class="scene" data-duration="7600">
+ <div class="content split">
+  <div>
+   <div class="eyebrow">03 · УЛУТТУК ОЮНДАР + ФИЗИКА</div>
+   <h2>Ойноп жатып<br><span class="gradient">үйрөн.</span></h2>
+   <p class="lead">Кыргыздын улуттук оюндарынан шыктанган оюн-тесттер физикалык формулаларды кайталоону кыймылдуу жана кызыктуу тажрыйбага айлантат.</p>
+   <div class="cards">
+    <article class="card"><div class="ico">🐎</div><h3>Кыз Куумай</h3><p>Суроолорго жооп берип, жарыш формасында үйрөн.</p></article>
+    <article class="card"><div class="ico">🪢</div><h3>Аркан Тартыш</h3><p>Физика формулаларын оюн аркылуу бекемде.</p></article>
+   </div>
   </div>
+  <div class="visual"><div class="ring"></div><div class="holo"><div class="scan"></div><div class="emoji">🏁</div></div></div>
+ </div>
 </section>
 
-<section class="scene">
-  <div class="content">
-    <div class="kicker reveal">Интеллектуалдык жарыш</div>
-    <h2 class="reveal d1">Оюн аркылуу<br><span class="gradient">үйрөн!</span></h2>
-    <div class="cards reveal d2">
-      <div class="card"><div class="icon">🐎</div><strong>Кыз Куумай</strong><small>Кыргыз улуттук оюнунун санариптик дүйнөсү</small></div>
-      <div class="card"><div class="icon">🪢</div><strong>Аркан Тартыш</strong><small>Формулалар жана билим үчүн жарыш</small></div>
-      <div class="card"><div class="icon">🎮</div><strong>Танк Согушу 2D</strong><small>Стратегия, кыймыл жана аракет</small></div>
-    </div>
-    <p class="reveal d3" style="margin-top:23px">Улуттук баалуулуктар менен санариптик оюндар.</p>
+<section class="scene" data-duration="7300">
+ <div class="content split">
+  <div>
+   <div class="eyebrow">04 · РЕТРО ОЮН ААЛАМЫ</div>
+   <h2>Танк согушу 2D.<br><span class="gradient">Стратегияңды сына.</span></h2>
+   <p class="lead">Классикалык Battle City стилиндеги ретро оюнда багыт тандап, душмандын танктарына каршы аракеттен жана базаңды корго.</p>
+   <div class="pills"><span class="pill">🎮 2D оюн</span><span class="pill">🧠 Стратегия</span><span class="pill">🛡️ Базаны коргоо</span></div>
   </div>
+  <div class="visual"><div class="ring"></div><div class="holo"><div class="scan"></div><div class="emoji">🛡️</div></div></div>
+ </div>
 </section>
 
-<section class="scene">
-  <div class="content">
-    <div class="kicker reveal">Мугалимдин санариптик мейкиндиги</div>
-    <h2 class="reveal d1">Сабак даярдоо<br><span class="gradient">жеңилирээк</span></h2>
-    <div class="cards reveal d2">
-      <div class="card"><div class="icon">📋</div><strong>Сабак пландары</strong><small>Конспекттер жана усулдук материалдар</small></div>
-      <div class="card"><div class="icon">📽️</div><strong>Презентациялар</strong><small>Көрсөтмөлүү сабактарга материалдар</small></div>
-      <div class="card"><div class="icon">🛍️</div><strong>Мугалимдин маркети</strong><small>Окуу материалдарын бөлүшүү жана сатуу бөлүмү</small></div>
-    </div>
-    <div class="tag reveal d3">МУГАЛИМДИН ЭМГЕГИН БААЛАЙБЫЗ</div>
+<section class="scene" data-duration="8000">
+ <div class="content split">
+  <div>
+   <div class="eyebrow">05 · МУГАЛИМ ҮЧҮН</div>
+   <h2>Сабакка даярдык<br><span class="gradient">жеңилдейт.</span></h2>
+   <p class="lead">Сабактын пландары бөлүмү мугалимге сабакты уюштурууда колдонууга боло турган даяр материалдарды табууга жардам берет.</p>
+   <div class="list">
+    <div class="listitem"><span class="check">✓</span><span>Сабактын конспекттери жана пландары.</span></div>
+    <div class="listitem"><span class="check">✓</span><span>Методикалык колдонмолор.</span></div>
+    <div class="listitem"><span class="check">✓</span><span>Чейректик пландар жана презентациялар.</span></div>
+   </div>
+   <div class="pills"><span class="pill">Мугалимдерге</span><span class="pill">Окуу материалдары</span></div>
   </div>
+  <div class="visual"><div class="ring"></div><div class="holo"><div class="scan"></div><div class="emoji">🧑‍🏫</div></div></div>
+ </div>
 </section>
 
-<section class="scene">
-  <div class="content">
-    <div class="kicker reveal">Билимиңди сынап көр</div>
-    <h2 class="reveal d1">Тест борбору<br><span class="gradient">жаңы деңгээлде</span></h2>
-    <div class="panel reveal d2">
-      <div class="panel-head"><strong>BILIMAL · TEST CENTER</strong><span class="live">● СЫНАК РЕЖИМИ</span></div>
-      <div class="cards" style="margin:0">
-        <div class="card"><div class="icon">📝</div><strong>Тесттер</strong><small>Билимди текшерүү</small></div>
-        <div class="card"><div class="icon">⏱️</div><strong>Убакыт</strong><small>Сынак режиминде иштөө</small></div>
-        <div class="card"><div class="icon">🛡️</div><strong>Anti-Cheat</strong><small>Тест учурундагы коргоо мүмкүнчүлүктөрү</small></div>
-      </div>
-    </div>
-    <p class="reveal d3" style="margin-top:18px">Билимиңди текшер. Натыйжаңды жакшырт.</p>
+<section class="scene" data-duration="7600">
+ <div class="content split">
+  <div>
+   <div class="eyebrow">06 · БИЛИМДИ ТЕКШЕРҮҮ</div>
+   <h2>Тест борбору.<br><span class="gradient">Өз билимиңди сына.</span></h2>
+   <p class="lead">Тест борбору билимди текшерүү жана экзамен форматына көнүгүү үчүн түзүлгөн. Системада тест тапшыруу учурундагы тартипти колдоого багытталган Anti-Cheat v3 коргоосу бар.</p>
+   <div class="cards">
+    <article class="card"><div class="ico">🎯</div><h3>Билимди баалоо</h3><p>Суроолорго жооп берип, өз даярдыгыңды текшер.</p></article>
+    <article class="card"><div class="ico">🔐</div><h3>Anti-Cheat v3</h3><p>Тест учурунда алдамчылыкка каршы коргоо.</p></article>
+   </div>
   </div>
+  <div class="visual"><div class="ring"></div><div class="holo"><div class="scan"></div><div class="emoji">🧠</div></div></div>
+ </div>
 </section>
 
-<section class="scene">
-  <div class="content">
-    <div class="kicker reveal">Илимди тажрыйба аркылуу түшүн</div>
-    <h2 class="reveal d1">Виртуалдык<br><span class="gradient">лабораториялар</span></h2>
-    <div class="panel reveal d2">
-      <div class="panel-head"><strong>PHYSICS LAB</strong><span class="live">● ЭЛЕКТР ЧЫНЖЫРЫ</span></div>
-      <div class="circuit">
-        <div class="node">🔋</div><div class="wire"></div>
-        <div class="node">💡</div><div class="wire"></div>
-        <div class="node">⚡</div>
-      </div>
-      <div class="formula">U = I × R</div>
-      <p style="font-size:13px">Чынжырлар · Өлчөөлөр · Формулалар · Эсептөөлөр</p>
-    </div>
-    <p class="reveal d3" style="margin-top:19px">Көр. Тажрыйба жүргүз. Жыйынтык чыгар.</p>
+<section class="scene" data-duration="7800">
+ <div class="content split">
+  <div>
+   <div class="eyebrow">07 · ВИРТУАЛДЫК ЭКСПЕРИМЕНТТЕР</div>
+   <h2>Теориядан —<br><span class="gradient">тажрыйбага.</span></h2>
+   <p class="lead">Лабораториялык иштер бөлүмү физикалык кубулуштарды визуалдуу түшүнүүгө жана тажрыйбаларды кадам-кадам аткарууга жардам берет.</p>
+   <div class="list">
+    <div class="listitem"><span class="check">✦</span><span>Виртуалдык лабораториялык эксперименттер.</span></div>
+    <div class="listitem"><span class="check">✦</span><span>Электр чынжырын чогултууга арналган шаймандар.</span></div>
+    <div class="listitem"><span class="check">✦</span><span>Формулалар менен этап-этабы боюнча эсептөө.</span></div>
+   </div>
   </div>
+  <div class="visual"><div class="ring"></div><div class="holo"><div class="scan"></div><div class="emoji">⚗️</div></div></div>
+ </div>
 </section>
 
-<section class="scene">
-  <div class="content">
-    <div class="kicker reveal">Табияттын мыйзамдары</div>
-    <h2 class="reveal d1">Физика жана<br><span class="gradient">астрофизика</span></h2>
-    <div class="cards reveal d2">
-      <div class="card"><div class="icon">⚛️</div><strong>Кванттык физика</strong><small>Атомдор жана бөлүкчөлөр дүйнөсү</small></div>
-      <div class="card"><div class="icon">🌈</div><strong>Фотоэффект</strong><small>Жарык менен заттын өз ара аракеттениши</small></div>
-      <div class="card"><div class="icon">🌀</div><strong>Космостук кубулуштар</strong><small>Пульсарлар жана жылдыздар</small></div>
-    </div>
-    <div class="quantum reveal d3">
-      <i style="--r:0deg"></i><i style="--r:60deg"></i>
-      <i style="--r:120deg"></i><b></b>
-    </div>
+<section class="scene" data-duration="8200">
+ <div class="content split">
+  <div>
+   <div class="eyebrow">08 · ФИЗИКА ЖАНА АСТРОФИЗИКА</div>
+   <h2>Ааламдын сырларын<br><span class="gradient">изилде.</span></h2>
+   <p class="lead">Физика менен астрофизиканын кызыктуу темаларын жөнөкөй тилде түшүнүүгө чакырык: кванттык кубулуштардан тартып ааламдагы пульсарларга чейин.</p>
+   <div class="pills"><span class="pill">Кванттык хаос</span><span class="pill">Фотоэффект</span><span class="pill">Пульсарлар</span><span class="pill">Ааламдын сырлары</span></div>
+   <p class="lead" style="font-size:15px;margin-top:22px">Суроо бер. Байка. Изилде. Илимге кызыгуу ушинтип башталат.</p>
   </div>
+  <div class="visual"><div class="ring"></div><div class="holo"><div class="scan"></div><div class="emoji">🌌</div></div></div>
+ </div>
 </section>
 
-<section class="scene">
-  <div class="content">
-    <div class="kicker reveal">Жерден ааламга чейин</div>
-    <div class="planet reveal d1"></div>
-    <h2 class="reveal d2">Космоско<br><span class="gradient">саякат</span></h2>
-    <p class="reveal d3">Галактикалар. Жылдыздар. Кара тешиктер. Ааламдын сырлары.</p>
+<section class="scene" data-duration="7800">
+ <div class="content split">
+  <div>
+   <div class="eyebrow">09 · БИЛИМ БЕРҮҮНҮ ЖАҢЫЛОО</div>
+   <h2>Мугалимдин тажрыйбасы.<br><span class="gradient">Санарип мүмкүнчүлүк.</span></h2>
+   <p class="lead">Bilimal.org сайтынын негиздөөчүсү — физика мугалими, Mugalim.AI жана BiliMal.org долбоорлорунун жаратуучусу. Максаты — так илимдерди жөнөкөй тилде жеткиликтүү кылып, билим берүүнү заманбап санарип куралдар менен өнүктүрүү.</p>
+   <div class="list">
+    <div class="listitem"><span class="check">✓</span><span>Окутуучу оюндарды иштеп чыгуу.</span></div>
+    <div class="listitem"><span class="check">✓</span><span>Виртуалдык лабораторияларды түзүү.</span></div>
+    <div class="listitem"><span class="check">✓</span><span>Тесттер жана акылдуу окуу куралдары.</span></div>
+   </div>
   </div>
+  <div class="visual"><div class="ring"></div><div class="holo"><div class="scan"></div><div class="emoji">🚀</div></div></div>
+ </div>
 </section>
 
-<section class="scene">
-  <div class="content">
-    <div class="kicker reveal">Санариптик келечек</div>
-    <div class="emblem reveal d1">🤖</div>
-    <h2 class="reveal d2">Жаңы идеялар.<br><span class="gradient">Жаңы мүмкүнчүлүктөр.</span></h2>
-    <p class="reveal d3">Интерактивдүү билим берүү, санариптик куралдар жана технология менен өнүгүүгө умтулуу.</p>
-    <div class="tag reveal d4">БИЛИМ — ЭҢ ЧОҢ КҮЧ</div>
-  </div>
-</section>
-
-<section class="scene">
-  <div class="orbit"><i class="satellite"></i></div>
-  <div class="content">
-    <div class="kicker reveal">Билим ааламына кошул</div>
-    <div class="emblem reveal d1">✦</div>
-    <div class="logo reveal d2"><span class="gradient">Bilimal</span><small>.org</small></div>
-    <p class="reveal d3">Окуучуларга — билим. Мугалимдерге — мүмкүнчүлүк. Илимге — жаңы горизонттор.</p>
-    <div class="final-url reveal d4">WWW.BILIMAL.ORG</div>
-    <div class="tag reveal d4">БИЛИМ ААЛАМЫ СЕНИ КҮТӨТ</div>
-  </div>
+<section class="scene" data-duration="8500">
+ <div class="content">
+  <div class="eyebrow">10 · БИЛИМДИН КЕЛЕЧЕГИ БҮГҮН БАШТАЛАТ</div>
+  <h2><span class="gradient">Bilimal.org</span><br>менен изилде.</h2>
+  <p class="quote">«Билим — жаттап алуу гана эмес. Ал — <em>суроо берүү, тажрыйба жүргүзүү жана жаңы мүмкүнчүлүктөрдү ачуу.</em>»</p>
+  <div class="footerline"></div>
+  <p class="lead">Окуучулар үчүн — кызыктуу үйрөнүү. Мугалимдер үчүн — пайдалуу материалдар. Илимге кызыккандар үчүн — изилдөөгө чакырык.</p>
+  <a class="cta" href="https://bilimal.org/" target="_blank" rel="noopener">Сайтка өтүү · bilimal.org <span>↗</span></a>
+ </div>
 </section>
 
 </main>
-<div class="footer" id="footer">BILIMAL.ORG · САНАРИПТИК БИЛИМ БЕРҮҮ МЕЙКИНДИГИ</div>
-
 <script>
-(() => {
-"use strict";
+(()=>{
+const scenes=[...document.querySelectorAll('.scene')];
+const progress=document.getElementById('progress');
+const counter=document.getElementById('counter');
+const soundState=document.getElementById('soundState');
+const flash=document.getElementById('flash');
+const warp=document.getElementById('warp');
+let current=0,timer=null,started=false,muted=false,audioCtx=null,master=null;
+let sceneStart=performance.now();
 
-const scenes = [...document.querySelectorAll(".scene")];
-const progress = document.getElementById("progress");
-const status = document.getElementById("soundStatus");
-const canvas = document.getElementById("space");
-const ctx = canvas.getContext("2d");
-
-const SCENE_MS = 6500;
-const TOTAL_MS = SCENE_MS * scenes.length;
-
-let started = performance.now();
-let active = 0;
-let stars = [];
-let audio = null;
-let soundEnabled = false;
-let activated = false;
-let lastCue = -1;
-
-function resize() {
-  const dpr = Math.min(devicePixelRatio || 1, 2);
-  canvas.width = innerWidth * dpr;
-  canvas.height = innerHeight * dpr;
-  canvas.style.width = innerWidth + "px";
-  canvas.style.height = innerHeight + "px";
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-  stars = Array.from(
-    {length:Math.min(260,Math.floor(innerWidth * innerHeight / 4500))},
-    () => ({
-      x:Math.random()*innerWidth,
-      y:Math.random()*innerHeight,
-      r:Math.random()*1.7+.3,
-      v:Math.random()*.42+.06,
-      a:Math.random()*.7+.2,
-      hue:Math.random()>.7?190:220
-    })
-  );
+function initAudio(){
+ if(started){
+  if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume();
+  return;
+ }
+ try{
+  audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  master=audioCtx.createGain();
+  master.gain.value=.82;
+  master.connect(audioCtx.destination);
+  started=true;
+  soundState.textContent=muted?'ӨЧҮК':'АКТИВДҮҮ';
+  if(audioCtx.state==='suspended')audioCtx.resume();
+ }catch(e){soundState.textContent='ЖЕТКИСИЗ'}
 }
 
-function drawSpace() {
-  ctx.clearRect(0,0,innerWidth,innerHeight);
-
-  for(const s of stars) {
-    s.y -= s.v;
-    s.x += Math.sin(s.y*.006)*.12;
-    if(s.y < -5) {
-      s.y = innerHeight+5;
-      s.x = Math.random()*innerWidth;
-    }
-    const pulse = .65 + .35*Math.sin(performance.now()*.002+s.x);
-    ctx.beginPath();
-    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-    ctx.fillStyle = `hsla(${s.hue},100%,85%,${s.a*pulse})`;
-    ctx.fill();
-
-    if(s.r>1.4) {
-      ctx.beginPath();
-      ctx.moveTo(s.x,s.y);
-      ctx.lineTo(s.x+s.v*8,s.y+s.v*14);
-      ctx.strokeStyle = `rgba(95,190,255,${s.a*.2})`;
-      ctx.stroke();
-    }
-  }
-  requestAnimationFrame(drawSpace);
+// Жагымдуу өтүү үнү: жумшак аба агымы жана жылуу синт.
+// Үзгүлтүксүз музыка же кайталанган "дың" үнү жок.
+function tone(freq1,freq2,start,dur,vol,type='sine',filterFreq=2200){
+ const o=audioCtx.createOscillator();
+ const g=audioCtx.createGain();
+ const f=audioCtx.createBiquadFilter();
+ o.type=type;
+ o.frequency.setValueAtTime(freq1,start);
+ o.frequency.exponentialRampToValueAtTime(Math.max(1,freq2),start+dur);
+ f.type='lowpass';
+ f.frequency.setValueAtTime(filterFreq,start);
+ f.frequency.exponentialRampToValueAtTime(Math.max(80,filterFreq*.35),start+dur);
+ g.gain.setValueAtTime(.0001,start);
+ g.gain.exponentialRampToValueAtTime(vol,start+Math.min(.16,dur*.25));
+ g.gain.exponentialRampToValueAtTime(.0001,start+dur);
+ o.connect(f);f.connect(g);g.connect(master);
+ o.start(start);o.stop(start+dur+.02);
 }
-
-function initAudio() {
-  if(audio) return audio;
-  const AC = window.AudioContext || window.webkitAudioContext;
-  if(!AC) {
-    status.textContent = "БРАУЗЕР ҮНДҮ КОЛДОБОЙТ";
-    return null;
-  }
-
-  audio = new AC();
-
-  // Жалпы үн күчөткүчү. Иш жүзүндөгү үн компьютердин
-  // жана браузердин үндөн да көз каранды.
-  const master = audio.createGain();
-  master.gain.value = .0001;
-  master.connect(audio.destination);
-
-  // Күчтүү, жумшак бас.
-  const bass = audio.createOscillator();
-  const bassGain = audio.createGain();
-  bass.type = "sine";
-  bass.frequency.value = 55;
-  bassGain.gain.value = .23;
-  bass.connect(bassGain);
-  bassGain.connect(master);
-  bass.start();
-
-  // Космостук фондук гармония.
-  const pad1 = audio.createOscillator();
-  const pad2 = audio.createOscillator();
-  const padFilter = audio.createBiquadFilter();
-  const padGain = audio.createGain();
-
-  pad1.type = "triangle";
-  pad1.frequency.value = 110;
-  pad2.type = "sine";
-  pad2.frequency.value = 164.81;
-  padFilter.type = "lowpass";
-  padFilter.frequency.value = 700;
-  padGain.gain.value = .13;
-
-  pad1.connect(padFilter);
-  pad2.connect(padFilter);
-  padFilter.connect(padGain);
-  padGain.connect(master);
-  pad1.start();
-  pad2.start();
-
-  audio.master = master;
-  audio.bass = bass;
-  audio.pad1 = pad1;
-  audio.pad2 = pad2;
-
-  return audio;
+function whoosh(start,dur,vol){
+ const length=Math.floor(audioCtx.sampleRate*dur);
+ const buffer=audioCtx.createBuffer(1,length,audioCtx.sampleRate);
+ const data=buffer.getChannelData(0);
+ for(let i=0;i<length;i++){
+  const x=i/length;
+  data[i]=(Math.random()*2-1)*Math.pow(Math.sin(Math.PI*x),1.6);
+ }
+ const src=audioCtx.createBufferSource();
+ const f=audioCtx.createBiquadFilter();
+ const g=audioCtx.createGain();
+ src.buffer=buffer;f.type='bandpass';
+ f.frequency.setValueAtTime(600,start);
+ f.frequency.exponentialRampToValueAtTime(2400,start+dur*.48);
+ f.frequency.exponentialRampToValueAtTime(420,start+dur);
+ f.Q.value=.7;
+ g.gain.setValueAtTime(.0001,start);
+ g.gain.linearRampToValueAtTime(vol,start+dur*.35);
+ g.gain.exponentialRampToValueAtTime(.0001,start+dur);
+ src.connect(f);f.connect(g);g.connect(master);
+ src.start(start);src.stop(start+dur);
 }
-
-function tone(freq,when,duration,volume,type="sine") {
-  if(!audio || !soundEnabled) return;
-
-  const osc = audio.createOscillator();
-  const gain = audio.createGain();
-  const filter = audio.createBiquadFilter();
-
-  osc.type = type;
-  osc.frequency.setValueAtTime(freq,when);
-  filter.type = "lowpass";
-  filter.frequency.value = Math.min(freq*5,5000);
-
-  gain.gain.setValueAtTime(.0001,when);
-  gain.gain.exponentialRampToValueAtTime(volume,when+.045);
-  gain.gain.setValueAtTime(volume,when+duration*.45);
-  gain.gain.exponentialRampToValueAtTime(.0001,when+duration);
-
-  osc.connect(filter);
-  filter.connect(gain);
-  gain.connect(audio.master);
-  osc.start(when);
-  osc.stop(when+duration+.03);
+function transitionSound(){
+ if(!audioCtx||muted)return;
+ const t=audioCtx.currentTime+.015;
+ whoosh(t,.78,.115);
+ tone(190,82,t,.72,.12,'sine',900);
+ tone(420,250,t+.06,.48,.045,'triangle',1500);
+ tone(520,390,t+.12,.34,.022,'sine',1800);
 }
-
-function cue(index) {
-  if(!soundEnabled || !audio || audio.state!=="running") return;
-  if(lastCue===index) return;
-  lastCue=index;
-
-  const now=audio.currentTime;
-  const base=[110,146.83,164.81,196,220,174.61,130.81,164.81,220,261.63,196,329.63][index];
-
-  // Үч басым музыкалык нота.
-  tone(base,now,.8,.13,"triangle");
-  tone(base*1.5,now+.12,.9,.075,"sine");
-  tone(base*2,now+.28,1.05,.055,"sine");
-
-  // Кыска жаркыраган өтүү эффекти.
-  tone(base*4,now+.05,.22,.045,"sine");
-  tone(base*3,now+.23,.3,.035,"triangle");
+function setMuted(){
+ muted=!muted;
+ if(master&&audioCtx){
+  master.gain.setTargetAtTime(muted?0:.82,audioCtx.currentTime,.035);
+ }
+ soundState.textContent=muted?'ӨЧҮК':'АКТИВДҮҮ';
 }
-
-function setSound(enabled) {
-  soundEnabled=enabled;
-  status.textContent=enabled ? "♫ ҮН КҮЧӨТҮЛДҮ" : "♫ ҮНДҮ КҮЙГҮЗҮҮ ҮЧҮН БАССАҢЫЗ";
-  status.style.color=enabled?"#73f5c6":"#b8d8ff";
-
-  if(enabled) {
-    const a=initAudio();
-    if(!a) return;
-
-    a.resume().then(() => {
-      a.master.gain.cancelScheduledValues(a.currentTime);
-      a.master.gain.setTargetAtTime(.72,a.currentTime,.18);
-      cue(active);
-    }).catch(() => {
-      status.textContent="БРАУЗЕРДЕ ҮНГӨ УРУКСАТ БЕРИҢИЗ";
-    });
-  } else if(audio) {
-    audio.master.gain.setTargetAtTime(.0001,audio.currentTime,.12);
-  }
+function schedule(){
+ clearTimeout(timer);
+ sceneStart=performance.now();
+ progress.style.width='0%';
+ timer=setTimeout(()=>go(1),Number(scenes[current].dataset.duration||7600));
 }
-
-function show(index) {
-  active=(index+scenes.length)%scenes.length;
-
-  scenes.forEach((scene,i) => {
-    scene.classList.toggle("active",i===active);
-    scene.setAttribute("aria-hidden",i===active?"false":"true");
-  });
-
-  lastCue=-1;
-  cue(active);
+function go(dir){
+ initAudio();
+ const old=current;
+ current=(current+dir+scenes.length)%scenes.length;
+ scenes[old].classList.remove('active');
+ scenes[old].classList.add('exit');
+ setTimeout(()=>scenes[old].classList.remove('exit'),1150);
+ scenes[current].classList.add('active');
+ counter.textContent=String(current+1).padStart(2,'0')+' / '+String(scenes.length).padStart(2,'0');
+ flash.classList.remove('go');warp.classList.remove('go');
+ void flash.offsetWidth;
+ flash.classList.add('go');warp.classList.add('go');
+ transitionSound();
+ burst();
+ schedule();
 }
+document.addEventListener('pointerdown',()=>{
+ initAudio();
+},{once:true});
+document.addEventListener('keydown',e=>{
+ if(e.code==='Space'){
+  e.preventDefault();initAudio();setMuted();
+ }else if(e.code==='ArrowRight'||e.code==='PageDown'){
+  e.preventDefault();go(1);
+ }else if(e.code==='ArrowLeft'||e.code==='PageUp'){
+  e.preventDefault();go(-1);
+ }else if(e.key.toLowerCase()==='f'){
+  if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();
+  else document.exitFullscreen?.();
+ }
+});
 
-function tick(now) {
-  const elapsed=now-started;
-  const cycle=elapsed%TOTAL_MS;
-  const index=Math.floor(cycle/SCENE_MS);
-
-  progress.style.width=(cycle/TOTAL_MS*100)+"%";
-  if(index!==active) show(index);
-
-  requestAnimationFrame(tick);
+// Жылдыздар жана жарык бөлүкчөлөрү
+const starCanvas=document.getElementById('stars');
+const sctx=starCanvas.getContext('2d');
+let stars=[],parts=[];
+function resize(){
+ const dpr=Math.min(devicePixelRatio||1,2);
+ starCanvas.width=innerWidth*dpr;
+ starCanvas.height=innerHeight*dpr;
+ starCanvas.style.width=innerWidth+'px';
+ starCanvas.style.height=innerHeight+'px';
+ sctx.setTransform(dpr,0,0,dpr,0,0);
+ stars=Array.from({length:Math.min(190,Math.floor(innerWidth*innerHeight/6500))},()=>({
+  x:Math.random()*innerWidth,y:Math.random()*innerHeight,
+  r:Math.random()*1.5+.25,a:Math.random()*.7+.15,
+  v:Math.random()*.28+.04,p:Math.random()*6.28
+ }));
 }
-
-function activateSound() {
-  if(activated) return;
-  activated=true;
-  setSound(true);
-  document.removeEventListener("pointerdown",activateSound);
-  document.removeEventListener("keydown",activateSound);
+function drawStars(){
+ sctx.clearRect(0,0,innerWidth,innerHeight);
+ for(const s of stars){
+  s.y-=s.v;
+  if(s.y<0){s.y=innerHeight;s.x=Math.random()*innerWidth}
+  const a=s.a*(.6+.4*Math.sin(Date.now()*.001+s.p));
+  sctx.fillStyle=`rgba(170,220,255,${a})`;
+  sctx.beginPath();sctx.arc(s.x,s.y,s.r,0,Math.PI*2);sctx.fill();
+ }
+ requestAnimationFrame(drawStars);
 }
-
-// Браузер автоматтык үн чыгарууну бөгөттөшү мүмкүн.
-// Биринчи чыныгы колдонуучулук аракет үн үчүн талап кылынат.
-document.addEventListener("pointerdown",activateSound);
-document.addEventListener("keydown",activateSound);
-
-window.addEventListener("resize",resize);
-
-// Эки жолу басуу үн режимин өзгөртөт; башкаруу панели көрүнбөйт.
-document.addEventListener("dblclick",() => setSound(!soundEnabled));
-
-resize();
-show(0);
-drawSpace();
-requestAnimationFrame(tick);
-
+function burst(){
+ const cx=innerWidth*.5,cy=innerHeight*.5;
+ for(let i=0;i<42;i++){
+  const a=Math.random()*Math.PI*2,spd=Math.random()*5+1;
+  parts.push({x:cx,y:cy,vx:Math.cos(a)*spd,vy:Math.sin(a)*spd,
+  life:1,r:Math.random()*2.5+.6,h:Math.random()<.5?185:255});
+ }
+}
+function drawParts(){
+ const canvas=document.createElement;
+ // Бөлүкчөлөр өзүнчө overlay canvas'та тартылат.
+ let c=document.getElementById('particles');
+ if(!c){
+  c=document.createElement('canvas');c.id='particles';
+  c.style.cssText='position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:3';
+  document.body.appendChild(c);
+ }
+ const ctx=c.getContext('2d');
+ const dpr=Math.min(devicePixelRatio||1,2);
+ if(c.width!==innerWidth*dpr||c.height!==innerHeight*dpr){
+  c.width=innerWidth*dpr;c.height=innerHeight*dpr;
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+ }
+ ctx.clearRect(0,0,innerWidth,innerHeight);
+ parts=parts.filter(p=>p.life>0);
+ for(const p of parts){
+  p.x+=p.vx;p.y+=p.vy;p.vx*=.985;p.vy*=.985;p.life-=.018;
+  ctx.fillStyle=`hsla(${p.h},100%,75%,${p.life})`;
+  ctx.shadowBlur=12;ctx.shadowColor=`hsla(${p.h},100%,65%,.8)`;
+  ctx.beginPath();ctx.arc(p.x,p.y,p.r*p.life,0,Math.PI*2);ctx.fill();
+ }
+ ctx.shadowBlur=0;
+ requestAnimationFrame(drawParts);
+}
+addEventListener('resize',resize);
+resize();drawStars();drawParts();
+setInterval(()=>{
+ const elapsed=performance.now()-sceneStart;
+ const dur=Number(scenes[current].dataset.duration||7600);
+ progress.style.width=Math.min(100,elapsed/dur*100)+'%';
+},100);
+schedule();
 })();
 </script>
 </body>
